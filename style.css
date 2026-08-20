@@ -240,3 +240,59 @@ body {
 .components-panel {
   margin-top: 0;
 }
+/* =========================================================
+   ANALYZER LAYOUT FIX
+   ========================================================= */
+
+.analyzer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+  margin-top: 34px;
+}
+
+.analyzer-left,
+.analyzer-right {
+  min-width: 0;
+}
+
+.upload-box {
+  width: 100%;
+  min-height: 420px;
+  box-sizing: border-box;
+}
+
+.button-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+
+  /* creates more breathing room below white box */
+  margin-top: 22px;
+  margin-bottom: 24px;
+}
+
+.components-panel {
+  margin-top: 0;
+}
+
+.recommendations-panel {
+  margin-top: 34px;
+}
+
+.materials-panel {
+  margin-top: 0;
+}
+
+@media (max-width: 900px) {
+  .analyzer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .analyzer-right {
+    margin-top: 30px;
+  }
+}
