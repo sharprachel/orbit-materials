@@ -43,45 +43,47 @@
       </div>
       <div class="analyzer-grid">
 
-  <div class="analyzer-left">
+<div class="analyzer-left">
 
-    <div class="button-row">
-      <button id="analyze-button" class="action-btn">
-        Analyze Facade
-      </button>
+  <label class="upload-box" for="image-upload">
+    <input
+      id="image-upload"
+      type="file"
+      accept="image/*"
+    />
 
-      <button id="clear-button" class="secondary-btn">
-        Clear
-      </button>
-    </div>
-
-    <label class="upload-box" for="image-upload">
-      <input
-        id="image-upload"
-        type="file"
-        accept="image/*"
-      />
-
-      <div id="upload-placeholder" class="upload-placeholder">
-        <div class="upload-title">Upload Building Facade</div>
-        <div class="upload-subtitle">
-          Click here to choose an image
-        </div>
+    <div id="upload-placeholder" class="upload-placeholder">
+      <div class="upload-title">Upload Building Facade</div>
+      <div class="upload-subtitle">
+        Click here to choose an image
       </div>
-
-      <img
-        id="image-preview"
-        class="image-preview"
-        alt="Uploaded building facade"
-      />
-    </label>
-
-    <div class="materials-panel">
-      <h3>Materials Identified</h3>
-      <p class="muted">
-        Detected materials and overlay colours will appear here.
-      </p>
     </div>
+
+    <img
+      id="image-preview"
+      class="image-preview"
+      alt="Uploaded building facade"
+    />
+  </label>
+
+  <div class="button-row">
+    <button id="analyze-button" class="action-btn">
+      Analyze Facade
+    </button>
+
+    <button id="clear-button" class="secondary-btn">
+      Clear
+    </button>
+  </div>
+
+  <div class="materials-panel">
+    <h3>Materials Identified</h3>
+    <p class="muted">
+      Detected materials and overlay colours will appear here.
+    </p>
+  </div>
+
+</div>
 
   </div>
 
