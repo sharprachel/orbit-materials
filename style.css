@@ -693,3 +693,21 @@ body {
 .component-image {
   transition: transform 0.18s ease;
 }
+/* Match hidden-component hover behaviour to detected components */
+
+.hidden-component-card {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hidden-component-image {
+  transition: transform 0.18s ease;
+}
+
+.hidden-component-card:hover .hidden-component-image {
+  transform: scale(1.05);
+}
+
+.hidden-component-card:hover div {
+  text-decoration: underline;
+}
