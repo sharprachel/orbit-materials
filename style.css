@@ -866,3 +866,62 @@ body {
     font-size: 28px;
   }
 }
+/* =========================================================
+   RECERTIFICATION PAGE SELECTOR
+   ========================================================= */
+
+.recert-selector-section {
+  margin-top: 42px;
+  margin-bottom: 60px;
+}
+
+.recert-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.recert-selector-pill {
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 16px;
+
+  background: var(--pill-light);
+
+  border-radius: 999px;
+
+  color: #333;
+  text-decoration: none;
+
+  font-family: 'Inconsolata', monospace;
+  font-size: 14px;
+
+  text-align: center;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.recert-selector-pill:hover {
+  background: var(--pill-dark);
+  color: white;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 1100px) {
+  .recert-selector-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .recert-selector-grid {
+    grid-template-columns: 1fr;
+  }
+}
