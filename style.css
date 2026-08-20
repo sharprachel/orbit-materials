@@ -133,8 +133,10 @@ body {
 
 .button-row {
   display: flex;
+  justify-content: center;
   gap: 12px;
-  margin-bottom: 14px;
+  margin-top: 14px;
+  margin-bottom: 22px;
 }
 
 .action-btn,
@@ -230,4 +232,11 @@ body {
   .upload-box {
     min-height: 300px;
   }
+}
+.analyzer-right {
+  padding-top: 0;
+}
+
+.components-panel {
+  margin-top: 0;
 }
