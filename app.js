@@ -244,6 +244,13 @@ function renderMaterialsList(detectedMaterials) {
 
 function renderComponentCards(detectedMaterials) {
 
+  if (!componentsResults) {
+    console.error(
+      "Could not find #components-results in index.html"
+    );
+    return;
+  }
+
   const components = detectedMaterials.filter(
     item => COMPONENT_INFO[item.classId]
   );
@@ -265,7 +272,8 @@ function renderComponentCards(detectedMaterials) {
 
   components.forEach(item => {
 
-    const component = COMPONENT_INFO[item.classId];
+    const component =
+      COMPONENT_INFO[item.classId];
 
     html += `
       <div class="component-card">
@@ -286,7 +294,9 @@ function renderComponentCards(detectedMaterials) {
     `;
   });
 
-  html += `</div>`;
+  html += `
+    </div>
+  `;
 
   componentsResults.innerHTML = html;
 }
