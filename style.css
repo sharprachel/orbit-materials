@@ -1,1 +1,125 @@
-/* Orbit Materials stylesheet */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Inconsolata:wght@400;500;600&family=Hanken+Grotesk:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg: #f5f5f6;
+  --panel: #ffffff;
+  --text: #1f1f23;
+  --muted: #5f6368;
+  --line: #d6d7db;
+  --pill-dark: #4d4d52;
+  --pill-light: #dededf;
+  --shadow: 0 6px 18px rgba(0,0,0,0.05);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Hanken Grotesk', sans-serif;
+}
+
+.site-wrap {
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: 18px 22px 60px;
+}
+
+.logo-text {
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 34px;
+  line-height: 0.92;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.nav-wrap {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin: 10px 0 12px;
+}
+
+.nav-pill {
+  font-family: 'Inconsolata', monospace;
+  font-size: 14px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--pill-light);
+  color: #333;
+  text-decoration: none;
+}
+
+.nav-pill.active {
+  background: var(--pill-dark);
+  color: white;
+}
+
+.divider {
+  border-top: 1px solid #cfcfd4;
+  margin: 10px 0 14px;
+}
+
+.hero-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 68px;
+  line-height: 1.02;
+  text-transform: uppercase;
+  letter-spacing: 12px;
+  margin-top: 8px;
+  margin-bottom: 20px;
+  max-width: 1420px;
+}
+
+.hero-title span {
+  display: block;
+}
+
+.hero-body {
+  font-size: 23px;
+  line-height: 1.45;
+  font-weight: 300;
+  max-width: 980px;
+  margin-bottom: 22px;
+}
+
+.section-subtitle {
+  font-family: 'Inconsolata', monospace;
+  font-size: 18px;
+  margin: 28px 0 12px;
+}
+
+.section-body {
+  font-size: 17px;
+  line-height: 1.65;
+  font-weight: 300;
+  color: #32343a;
+  max-width: 860px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 1100px) {
+  .hero-title {
+    font-size: 42px;
+    line-height: 1.1;
+    letter-spacing: 7px;
+  }
+
+  .hero-body {
+    font-size: 19px;
+  }
+
+  .nav-wrap {
+    grid-template-columns: 1fr 1fr;
+  }
+}
