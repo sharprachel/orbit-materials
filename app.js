@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const overlayCanvas = document.getElementById("segmentation-overlay");
   const uploadBox = document.querySelector(".upload-box");
   const materialsResults = document.getElementById("materials-results");
+  const componentsResults = document.getElementById("components-results");
 
   env.allowLocalModels = true;
 
@@ -57,6 +58,43 @@ const CLASS_NAMES = {
   10: "Window & Frame"
 };
 
+const COMPONENT_INFO = {
+  1: {
+    name: "Brick",
+    svg: "./assets/svg/Brick.svg"
+  },
+
+  2: {
+    name: "Door & Frame",
+    svg: "./assets/svg/Door.svg"
+  },
+
+  5: {
+    name: "Shingles",
+    svg: "./assets/svg/Shingles.svg"
+  },
+
+  6: {
+    name: "Siding",
+    svg: "./assets/svg/Siding.svg"
+  },
+
+  7: {
+    name: "Stone",
+    svg: "./assets/svg/Stone.svg"
+  },
+
+  8: {
+    name: "Stucco",
+    svg: "./assets/svg/Stucco.svg"
+  },
+
+  10: {
+    name: "Window & Frame",
+    svg: "./assets/svg/Window.svg"
+  }
+};
+  
 const LIMITED_CIRCULARITY = new Set([
   3,  // Fiber Cement
   5,  // Shingles
@@ -204,7 +242,55 @@ function renderMaterialsList(detectedMaterials) {
     item => LIMITED_CIRCULARITY.has(item.classId)
   );
 
+function renderComponentCards(detectedMaterials) {
 
+  const components = detectedMaterials.filter(
+    item => COMPONENT_INFO[item.classId]
+  );
+
+  if (components.length === 0) {
+
+    componentsResults.innerHTML = `
+      <p class="muted">
+        No reusable components detected.
+      </p>
+    `;
+
+    return;
+  }
+
+  let html = `
+    <div class="component-grid">
+  `;
+
+  components.forEach(item => {
+
+    const component = COMPONENT_INFO[item.classId];
+
+    html += `
+      <div class="component-card">
+
+        <div class="component-image-wrap">
+          <img
+            src="${component.svg}"
+            alt="${component.name}"
+            class="component-image"
+          >
+        </div>
+
+        <div class="component-card-title">
+          ${component.name}
+        </div>
+
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+
+  componentsResults.innerHTML = html;
+}
+  
   function buildMaterialRow(item) {
 
     const color = CLASS_COLORS[item.classId];
@@ -478,13 +564,16 @@ function renderMaterialsList(detectedMaterials) {
         outputs.logits
       );
 
-      const detectedMaterials =
+const detectedMaterials =
   getDetectedMaterials(outputs.logits);
 
 renderMaterialsList(
   detectedMaterials
 );
 
+renderComponentCards(
+  detectedMaterials
+);
       URL.revokeObjectURL(imageURL);
 
 
@@ -563,6 +652,12 @@ renderMaterialsList(
   </p>
 `;
 
+componentsResults.innerHTML = `
+  <p class="muted">
+    Detected components will appear here after analysis.
+  </p>
+`;
+  
   // =========================================================
   // INITIALIZE
   // =========================================================
