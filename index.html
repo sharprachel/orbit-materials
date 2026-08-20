@@ -41,6 +41,69 @@
       <div class="section-body">
         The analyzer is trained on construction materials with reuse potential. Once detected, each material can link to material information, recertification guides, drop-off locations, and next-life suggestions.
       </div>
+      <div class="analyzer-grid">
+
+  <div class="analyzer-left">
+
+    <div class="button-row">
+      <button id="analyze-button" class="action-btn">
+        Analyze Facade
+      </button>
+
+      <button id="clear-button" class="secondary-btn">
+        Clear
+      </button>
+    </div>
+
+    <label class="upload-box" for="image-upload">
+      <input
+        id="image-upload"
+        type="file"
+        accept="image/*"
+      />
+
+      <div id="upload-placeholder" class="upload-placeholder">
+        <div class="upload-title">Upload Building Facade</div>
+        <div class="upload-subtitle">
+          Click here to choose an image
+        </div>
+      </div>
+
+      <img
+        id="image-preview"
+        class="image-preview"
+        alt="Uploaded building facade"
+      />
+    </label>
+
+    <div class="materials-panel">
+      <h3>Materials Identified</h3>
+      <p class="muted">
+        Detected materials and overlay colours will appear here.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="analyzer-right">
+
+    <div class="components-panel">
+      <h3>Detected Components</h3>
+      <p class="muted">
+        Detected components will appear here after analysis.
+      </p>
+    </div>
+
+    <div class="recommendations-panel">
+      <h3>Circularity Recommendations</h3>
+      <p class="muted">
+        Reuse guidance will appear here after analysis.
+      </p>
+    </div>
+
+  </div>
+
+</div>
     </section>
 
   </main>
