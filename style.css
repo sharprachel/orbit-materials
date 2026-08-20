@@ -407,3 +407,9 @@ body {
     margin-top: 30px;
   }
 }
+#segmentation-overlay {
+  display: none;
+  position: absolute;
+  pointer-events: none;
+  border-radius: 8px;
+}
