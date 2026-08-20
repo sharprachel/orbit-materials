@@ -12,22 +12,36 @@ document.addEventListener("DOMContentLoaded", async function () {
   // PAGE ELEMENTS
   // =========================================================
 
-  const imageUpload = document.getElementById("image-upload");
-  const imagePreview = document.getElementById("image-preview");
-  const uploadPlaceholder = document.getElementById("upload-placeholder");
+  const imageUpload =
+    document.getElementById("image-upload");
 
-  const clearButton = document.getElementById("clear-button");
-  const analyzeButton = document.getElementById("analyze-button");
+  const imagePreview =
+    document.getElementById("image-preview");
 
-  const overlayCanvas = document.getElementById("segmentation-overlay");
-  const uploadBox = document.querySelector(".upload-box");
+  const uploadPlaceholder =
+    document.getElementById("upload-placeholder");
 
-  const materialsResults = document.getElementById("materials-results");
-  const componentsResults = document.getElementById("components-results");
+  const clearButton =
+    document.getElementById("clear-button");
+
+  const analyzeButton =
+    document.getElementById("analyze-button");
+
+  const overlayCanvas =
+    document.getElementById("segmentation-overlay");
+
+  const uploadBox =
+    document.querySelector(".upload-box");
+
+  const componentsResults =
+    document.getElementById("components-results");
+
+  const recommendationsResults =
+    document.getElementById("recommendations-results");
 
 
   // =========================================================
-  // MODEL SETUP
+  // MODEL
   // =========================================================
 
   env.allowLocalModels = true;
@@ -40,25 +54,25 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
   // =========================================================
-  // CLASS INFORMATION
+  // MODEL CLASSES
   // =========================================================
 
   const CLASS_COLORS = {
-    1: [220, 20, 60],      // Brick
-    2: [160, 82, 45],      // Exterior Door
-    3: [169, 169, 169],    // Fiber Cement
-    4: [176, 224, 230],    // Glass
-    5: [139, 69, 19],      // Shingles
-    6: [70, 130, 180],     // Siding
-    7: [128, 128, 128],    // Stone
-    8: [255, 215, 0],      // Stucco
-    9: [34, 139, 34],      // Vegetation
-    10: [135, 206, 235]    // Window
+    1: [220, 20, 60],
+    2: [160, 82, 45],
+    3: [169, 169, 169],
+    4: [176, 224, 230],
+    5: [139, 69, 19],
+    6: [70, 130, 180],
+    7: [128, 128, 128],
+    8: [255, 215, 0],
+    9: [34, 139, 34],
+    10: [135, 206, 235]
   };
 
 
   const CLASS_NAMES = {
-    0: "background",
+    0: "Background",
     1: "Brick",
     2: "Door & Frame",
     3: "Fiber Cement",
@@ -72,7 +86,12 @@ document.addEventListener("DOMContentLoaded", async function () {
   };
 
 
+  // =========================================================
+  // COMPONENT DISPLAY
+  // =========================================================
+
   const COMPONENT_INFO = {
+
     1: {
       name: "Brick",
       svg: "./assets/svg/Brick.svg"
@@ -81,6 +100,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     2: {
       name: "Door & Frame",
       svg: "./assets/svg/Door.svg"
+    },
+
+    3: {
+      name: "Fiber Cement",
+      svg: "./assets/svg/Siding.svg"
     },
 
     5: {
@@ -110,18 +134,101 @@ document.addEventListener("DOMContentLoaded", async function () {
   };
 
 
-  const LIMITED_CIRCULARITY = new Set([
-    3,  // Fiber Cement
-    5,  // Shingles
-    6,  // Siding
-    8   // Stucco
-  ]);
+  // Classes excluded from the user-facing component display.
+  const HIDDEN_VISIBLE_CLASSES =
+    new Set([
+      0, // background
+      4, // non-window glass
+      9  // vegetation
+    ]);
 
 
-  const HIDDEN_CLASSES = new Set([
-    0,  // Background
-    4   // Non-window Glass
-  ]);
+  // =========================================================
+  // HIDDEN COMPONENT INFERENCE
+  // =========================================================
+
+  // Preserves the logic from the original Colab.
+  // These visible facade materials suggest wood framing behind.
+  const WOOD_FRAMING_TRIGGERS =
+    new Set([
+      1, // Brick
+      3, // Fiber Cement
+      5, // Shingles
+      6, // Siding
+      8  // Stucco
+    ]);
+
+
+  // =========================================================
+  // CIRCULARITY INFORMATION
+  // =========================================================
+
+  const RECOMMENDATION_INFO = {
+
+    1: {
+      name: "Brick",
+      potential: "High",
+      text:
+        "Prioritize direct salvage and reuse. Brick can be cleaned and reused in new construction when removed intact.",
+      anchor: "brick-stone-masonry"
+    },
+
+    2: {
+      name: "Door & Frame",
+      potential: "Very High",
+      text:
+        "Remove the door, frame and hardware intact where possible. Quality doors have excellent potential for direct architectural reuse.",
+      anchor: "door-frame"
+    },
+
+    3: {
+      name: "Fiber Cement",
+      potential: "Limited",
+      text:
+        "Direct reuse is often limited by brittleness and removal damage. Careful separation can improve recycling and waste-diversion opportunities.",
+      anchor: "building-envelope-panel"
+    },
+
+    5: {
+      name: "Shingles",
+      potential: "Limited",
+      text:
+        "Removal often damages shingles, so recovery may focus more on recycling or waste diversion than direct reuse.",
+      anchor: "building-envelope-panel"
+    },
+
+    6: {
+      name: "Siding",
+      potential: "Medium",
+      text:
+        "Carefully removed panels may be suitable for reuse depending on material, fastening method and condition.",
+      anchor: "building-envelope-panel"
+    },
+
+    7: {
+      name: "Stone",
+      potential: "Very High",
+      text:
+        "Prioritize whole-piece salvage. Natural stone has excellent reuse value and avoids the impacts associated with new quarrying.",
+      anchor: "brick-stone-masonry"
+    },
+
+    8: {
+      name: "Stucco",
+      potential: "Limited",
+      text:
+        "Stucco is normally bonded to its substrate and is rarely reused intact. Recovery generally focuses on separation and waste reduction.",
+      anchor: "building-envelope-panel"
+    },
+
+    10: {
+      name: "Window & Frame",
+      potential: "High",
+      text:
+        "Remove the complete assembly where possible. Intact windows and frames may be reused directly or separated for component recovery.",
+      anchor: "window-frame"
+    }
+  };
 
 
   // =========================================================
@@ -132,40 +239,61 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     try {
 
-      console.log("Loading Orbit Materials model...");
-
-      processor = await AutoImageProcessor.from_pretrained(
-        MODEL_PATH
+      console.log(
+        "Loading Orbit Materials model..."
       );
 
-      model = await SegformerForSemanticSegmentation.from_pretrained(
-        MODEL_PATH,
-        {
-          dtype: "fp32"
-        }
+
+      processor =
+        await AutoImageProcessor.from_pretrained(
+          MODEL_PATH
+        );
+
+
+      model =
+        await SegformerForSemanticSegmentation.from_pretrained(
+          MODEL_PATH,
+          {
+            dtype: "fp32"
+          }
+        );
+
+
+      console.log(
+        "✓ Orbit Materials model loaded"
       );
 
-      console.log("✓ Orbit Materials model loaded successfully");
 
-      analyzeButton.textContent = "Analyze Facade";
+      analyzeButton.textContent =
+        "Analyze Facade";
+
 
     } catch (error) {
 
-      console.error("Model loading error:", error);
+      console.error(
+        "Model loading error:",
+        error
+      );
 
-      analyzeButton.textContent = "Model Load Error";
+
+      analyzeButton.textContent =
+        "Model Load Error";
     }
   }
 
 
   // =========================================================
-  // POSITION SEGMENTATION OVERLAY
+  // POSITION OVERLAY
   // =========================================================
 
   function positionOverlayCanvas() {
 
-    const imageRect = imagePreview.getBoundingClientRect();
-    const boxRect = uploadBox.getBoundingClientRect();
+    const imageRect =
+      imagePreview.getBoundingClientRect();
+
+    const boxRect =
+      uploadBox.getBoundingClientRect();
+
 
     overlayCanvas.style.left =
       `${imageRect.left - boxRect.left}px`;
@@ -195,14 +323,24 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const logitsData = logits.data;
 
-    const counts = new Array(numClasses).fill(0);
+    const counts =
+      new Array(numClasses).fill(0);
 
-    const totalPixels = maskHeight * maskWidth;
+    const totalPixels =
+      maskHeight * maskWidth;
 
 
-    for (let y = 0; y < maskHeight; y++) {
+    for (
+      let y = 0;
+      y < maskHeight;
+      y++
+    ) {
 
-      for (let x = 0; x < maskWidth; x++) {
+      for (
+        let x = 0;
+        x < maskWidth;
+        x++
+      ) {
 
         let bestClass = 0;
         let bestScore = -Infinity;
@@ -219,7 +357,9 @@ document.addEventListener("DOMContentLoaded", async function () {
             y * maskWidth +
             x;
 
-          const score = logitsData[index];
+
+          const score =
+            logitsData[index];
 
 
           if (score > bestScore) {
@@ -244,27 +384,33 @@ document.addEventListener("DOMContentLoaded", async function () {
       classId++
     ) {
 
-      if (HIDDEN_CLASSES.has(classId)) {
-        continue;
-      }
-
       if (counts[classId] === 0) {
         continue;
       }
 
 
       detected.push({
+
         classId: classId,
-        name: CLASS_NAMES[classId],
-        count: counts[classId],
+
+        name:
+          CLASS_NAMES[classId],
+
+        count:
+          counts[classId],
+
         percent:
-          (counts[classId] / totalPixels) * 100
+          (
+            counts[classId] /
+            totalPixels
+          ) * 100
       });
     }
 
 
     detected.sort(
-      (a, b) => b.percent - a.percent
+      (a, b) =>
+        b.percent - a.percent
     );
 
 
@@ -273,132 +419,29 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
   // =========================================================
-  // MATERIALS IDENTIFIED
-  // =========================================================
-
-  function renderMaterialsList(detectedMaterials) {
-
-    const circularMaterials =
-      detectedMaterials.filter(
-        item =>
-          !LIMITED_CIRCULARITY.has(item.classId)
-      );
-
-
-    const limitedMaterials =
-      detectedMaterials.filter(
-        item =>
-          LIMITED_CIRCULARITY.has(item.classId)
-      );
-
-
-    function buildMaterialRow(item) {
-
-      const color =
-        CLASS_COLORS[item.classId];
-
-
-      return `
-        <div class="material-list-item">
-
-          <span
-            class="swatch"
-            style="
-              background:
-              rgb(${color[0]}, ${color[1]}, ${color[2]});
-            ">
-          </span>
-
-          <span class="material-name">
-            ${item.name}
-          </span>
-
-        </div>
-      `;
-    }
-
-
-    let html = `
-      <div class="materials-list">
-    `;
-
-
-    if (circularMaterials.length > 0) {
-
-      circularMaterials.forEach(item => {
-
-        html += buildMaterialRow(item);
-      });
-
-    } else {
-
-      html += `
-        <p class="muted">
-          No reusable materials detected.
-        </p>
-      `;
-    }
-
-
-    html += `
-      </div>
-    `;
-
-
-    if (limitedMaterials.length > 0) {
-
-      html += `
-        <div class="limited-panel">
-
-          <h3>
-            Identified Materials with Limited Circularity
-          </h3>
-
-          <div class="materials-list">
-      `;
-
-
-      limitedMaterials.forEach(item => {
-
-        html += buildMaterialRow(item);
-      });
-
-
-      html += `
-          </div>
-
-        </div>
-      `;
-    }
-
-
-    materialsResults.innerHTML = html;
-  }
-
-
-  // =========================================================
   // DETECTED COMPONENTS
   // =========================================================
 
-  function renderComponentCards(detectedMaterials) {
+  function renderComponentCards(
+    detectedMaterials
+  ) {
 
-    if (!componentsResults) {
+    const visibleComponents =
+      detectedMaterials.filter(item =>
 
-      console.error(
-        "Could not find #components-results in index.html"
+        !HIDDEN_VISIBLE_CLASSES.has(
+          item.classId
+        ) &&
+
+        COMPONENT_INFO[
+          item.classId
+        ]
       );
 
-      return;
-    }
 
-
-    const components =
-      detectedMaterials.filter(
-        item => COMPONENT_INFO[item.classId]
-      );
-
-
-    if (components.length === 0) {
+    if (
+      visibleComponents.length === 0
+    ) {
 
       componentsResults.innerHTML = `
         <p class="muted">
@@ -415,28 +458,183 @@ document.addEventListener("DOMContentLoaded", async function () {
     `;
 
 
-    components.forEach(item => {
+    visibleComponents.forEach(
+      item => {
 
-      const component =
-        COMPONENT_INFO[item.classId];
+        const component =
+          COMPONENT_INFO[
+            item.classId
+          ];
+
+        const color =
+          CLASS_COLORS[
+            item.classId
+          ];
+
+
+        html += `
+          <div class="component-card">
+
+            <div class="component-image-wrap">
+
+              <img
+                src="${component.svg}"
+                alt="${component.name}"
+                class="component-image"
+              >
+
+            </div>
+
+            <div class="component-label">
+
+              <span
+                class="component-swatch"
+                style="
+                  background:
+                  rgb(
+                    ${color[0]},
+                    ${color[1]},
+                    ${color[2]}
+                  );
+                "
+              ></span>
+
+              <span>
+                ${component.name}
+              </span>
+
+            </div>
+
+          </div>
+        `;
+      }
+    );
+
+
+    html += `
+      </div>
+    `;
+
+
+    const hasWoodFraming =
+      detectedMaterials.some(
+        item =>
+          WOOD_FRAMING_TRIGGERS.has(
+            item.classId
+          )
+      );
+
+
+    if (hasWoodFraming) {
+
+      html += `
+        <div class="hidden-components">
+
+          <div class="hidden-components-title">
+            Likely Hidden Components
+          </div>
+
+          <div class="hidden-components-copy">
+            Based on the detected cladding system,
+            the facade likely includes structural
+            components behind the visible exterior.
+          </div>
+
+          <a
+            class="hidden-component-card"
+            href="#dimensional-lumber"
+          >
+
+            <img
+              src="./assets/svg/Wood Frame.svg"
+              alt="Dimensional Lumber"
+              class="hidden-component-image"
+            >
+
+            <div>
+              Dimensional Lumber
+            </div>
+
+          </a>
+
+        </div>
+      `;
+    }
+
+
+    componentsResults.innerHTML =
+      html;
+  }
+
+
+  // =========================================================
+  // CIRCULARITY RECOMMENDATIONS
+  // =========================================================
+
+  function renderRecommendations(
+    detectedMaterials
+  ) {
+
+    const materials =
+      detectedMaterials.filter(
+        item =>
+          RECOMMENDATION_INFO[
+            item.classId
+          ]
+      );
+
+
+    if (materials.length === 0) {
+
+      recommendationsResults.innerHTML = `
+        <p class="muted">
+          No reuse recommendations available
+          for the detected materials.
+        </p>
+      `;
+
+      return;
+    }
+
+
+    let html = `
+      <div class="recommendations-list">
+    `;
+
+
+    materials.forEach(item => {
+
+      const info =
+        RECOMMENDATION_INFO[
+          item.classId
+        ];
 
 
       html += `
-        <div class="component-card">
+        <div class="recommendation-card">
 
-          <div class="component-image-wrap">
+          <div class="recommendation-header">
 
-            <img
-              src="${component.svg}"
-              alt="${component.name}"
-              class="component-image"
-            >
+            <span class="recommendation-name">
+              ${info.name}
+            </span>
+
+            <span class="recommendation-badge">
+              ${info.potential}
+            </span>
 
           </div>
 
-          <div class="component-card-title">
-            ${component.name}
+          <div class="recommendation-copy">
+            ${info.text}
           </div>
+
+          <a
+            href="#${info.anchor}"
+            class="recommendation-link"
+          >
+            View Material Information →
+          </a>
 
         </div>
       `;
@@ -448,45 +646,55 @@ document.addEventListener("DOMContentLoaded", async function () {
     `;
 
 
-    componentsResults.innerHTML = html;
+    recommendationsResults.innerHTML =
+      html;
   }
 
 
   // =========================================================
-  // DRAW SEGMENTATION OVERLAY
+  // SEGMENTATION OVERLAY
   // =========================================================
 
-  function drawSegmentationOverlay(logits) {
+  function drawSegmentationOverlay(
+    logits
+  ) {
 
-    const dims = logits.dims;
+    const dims =
+      logits.dims;
 
-    console.log(
-      "Logits dimensions:",
-      dims
-    );
+    const numClasses =
+      dims[1];
 
+    const maskHeight =
+      dims[2];
 
-    const numClasses = dims[1];
-    const maskHeight = dims[2];
-    const maskWidth = dims[3];
+    const maskWidth =
+      dims[3];
 
-    const logitsData = logits.data;
+    const logitsData =
+      logits.data;
 
 
     const imageRect =
       imagePreview.getBoundingClientRect();
 
 
-    const displayWidth = Math.max(
-      1,
-      Math.round(imageRect.width)
-    );
+    const displayWidth =
+      Math.max(
+        1,
+        Math.round(
+          imageRect.width
+        )
+      );
 
 
-    const displayHeight = Math.max(
-      1,
-      Math.round(imageRect.height)
-    );
+    const displayHeight =
+      Math.max(
+        1,
+        Math.round(
+          imageRect.height
+        )
+      );
 
 
     overlayCanvas.width =
@@ -500,7 +708,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
     const ctx =
-      overlayCanvas.getContext("2d");
+      overlayCanvas.getContext(
+        "2d"
+      );
 
 
     const imageData =
@@ -520,12 +730,16 @@ document.addEventListener("DOMContentLoaded", async function () {
       y++
     ) {
 
-      const maskY = Math.min(
-        maskHeight - 1,
-        Math.floor(
-          y * maskHeight / displayHeight
-        )
-      );
+      const maskY =
+        Math.min(
+          maskHeight - 1,
+
+          Math.floor(
+            y *
+            maskHeight /
+            displayHeight
+          )
+        );
 
 
       for (
@@ -534,16 +748,21 @@ document.addEventListener("DOMContentLoaded", async function () {
         x++
       ) {
 
-        const maskX = Math.min(
-          maskWidth - 1,
-          Math.floor(
-            x * maskWidth / displayWidth
-          )
-        );
+        const maskX =
+          Math.min(
+            maskWidth - 1,
+
+            Math.floor(
+              x *
+              maskWidth /
+              displayWidth
+            )
+          );
 
 
         let bestClass = 0;
-        let bestScore = -Infinity;
+        let bestScore =
+          -Infinity;
 
 
         for (
@@ -553,8 +772,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         ) {
 
           const index =
-            classId * maskHeight * maskWidth +
-            maskY * maskWidth +
+            classId *
+            maskHeight *
+            maskWidth +
+
+            maskY *
+            maskWidth +
+
             maskX;
 
 
@@ -564,19 +788,26 @@ document.addEventListener("DOMContentLoaded", async function () {
 
           if (score > bestScore) {
 
-            bestScore = score;
-            bestClass = classId;
+            bestScore =
+              score;
+
+            bestClass =
+              classId;
           }
         }
 
 
-        if (bestClass === 0) {
+        if (
+          bestClass === 0
+        ) {
           continue;
         }
 
 
         const color =
-          CLASS_COLORS[bestClass];
+          CLASS_COLORS[
+            bestClass
+          ];
 
 
         if (!color) {
@@ -585,7 +816,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
         const pixelIndex =
-          (y * displayWidth + x) * 4;
+          (
+            y *
+            displayWidth +
+            x
+          ) * 4;
 
 
         pixels[pixelIndex] =
@@ -597,7 +832,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         pixels[pixelIndex + 2] =
           color[2];
 
-        // Approximately 45% opacity
         pixels[pixelIndex + 3] =
           115;
       }
@@ -613,6 +847,29 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     overlayCanvas.style.display =
       "block";
+  }
+
+
+  // =========================================================
+  // RESET RESULTS
+  // =========================================================
+
+  function resetResults() {
+
+    componentsResults.innerHTML = `
+      <p class="muted">
+        Detected components will appear
+        here after analysis.
+      </p>
+    `;
+
+
+    recommendationsResults.innerHTML = `
+      <p class="muted">
+        Reuse guidance will appear
+        here after analysis.
+      </p>
+    `;
   }
 
 
@@ -633,53 +890,44 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
 
 
-      uploadedFile = file;
+      uploadedFile =
+        file;
 
 
       const reader =
         new FileReader();
 
 
-      reader.onload = function (e) {
+      reader.onload =
+        function (e) {
 
-        imagePreview.src =
-          e.target.result;
-
-        imagePreview.style.display =
-          "block";
-
-        uploadPlaceholder.style.display =
-          "none";
-
-        overlayCanvas.style.display =
-          "none";
+          imagePreview.src =
+            e.target.result;
 
 
-        // Reset old analysis results when
-        // a new photograph is uploaded.
-
-        materialsResults.innerHTML = `
-          <p class="muted">
-            Detected materials and overlay colours
-            will appear here.
-          </p>
-        `;
+          imagePreview.style.display =
+            "block";
 
 
-        componentsResults.innerHTML = `
-          <p class="muted">
-            Detected components will appear here
-            after analysis.
-          </p>
-        `;
+          uploadPlaceholder.style.display =
+            "none";
 
 
-        analyzeButton.textContent =
-          "Analyze Facade";
-      };
+          overlayCanvas.style.display =
+            "none";
 
 
-      reader.readAsDataURL(file);
+          analyzeButton.textContent =
+            "Analyze Facade";
+
+
+          resetResults();
+        };
+
+
+      reader.readAsDataURL(
+        file
+      );
     }
   );
 
@@ -702,7 +950,10 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
 
 
-      if (!processor || !model) {
+      if (
+        !processor ||
+        !model
+      ) {
 
         alert(
           "The model is still loading. Please wait a moment."
@@ -712,7 +963,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
 
 
-      let imageURL = null;
+      let imageURL =
+        null;
 
 
       try {
@@ -720,8 +972,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         analyzeButton.textContent =
           "Analyzing...";
 
+
         analyzeButton.disabled =
           true;
+
 
         overlayCanvas.style.display =
           "none";
@@ -739,25 +993,16 @@ document.addEventListener("DOMContentLoaded", async function () {
           );
 
 
-        console.log(
-          "Image loaded:",
-          image.width,
-          image.height
-        );
-
-
         const inputs =
-          await processor(image);
+          await processor(
+            image
+          );
 
 
         const outputs =
-          await model(inputs);
-
-
-        console.log(
-          "Model output:",
-          outputs
-        );
+          await model(
+            inputs
+          );
 
 
         drawSegmentationOverlay(
@@ -777,12 +1022,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         );
 
 
-        renderMaterialsList(
+        renderComponentCards(
           detectedMaterials
         );
 
 
-        renderComponentCards(
+        renderRecommendations(
           detectedMaterials
         );
 
@@ -831,7 +1076,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       event.preventDefault();
 
 
-      uploadedFile = null;
+      uploadedFile =
+        null;
 
 
       imageUpload.value =
@@ -856,7 +1102,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
       const ctx =
-        overlayCanvas.getContext("2d");
+        overlayCanvas.getContext(
+          "2d"
+        );
 
 
       ctx.clearRect(
@@ -867,30 +1115,17 @@ document.addEventListener("DOMContentLoaded", async function () {
       );
 
 
-      materialsResults.innerHTML = `
-        <p class="muted">
-          Detected materials and overlay colours
-          will appear here.
-        </p>
-      `;
-
-
-      componentsResults.innerHTML = `
-        <p class="muted">
-          Detected components will appear here
-          after analysis.
-        </p>
-      `;
-
-
       analyzeButton.textContent =
         "Analyze Facade";
+
+
+      resetResults();
     }
   );
 
 
   // =========================================================
-  // KEEP OVERLAY ALIGNED ON RESIZE
+  // RESIZE
   // =========================================================
 
   window.addEventListener(
@@ -914,6 +1149,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   analyzeButton.textContent =
     "Loading Model...";
+
+
+  resetResults();
 
 
   await loadModel();
