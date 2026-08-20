@@ -472,41 +472,59 @@ document.addEventListener("DOMContentLoaded", async function () {
           ];
 
 
-        html += `
-          <div class="component-card">
+const anchorMap = {
+  1: "brick-stone-masonry",
+  2: "door-frame",
+  3: "building-envelope-panel",
+  5: "building-envelope-panel",
+  6: "building-envelope-panel",
+  7: "brick-stone-masonry",
+  8: "building-envelope-panel",
+  10: "window-frame"
+};
 
-            <div class="component-image-wrap">
+const anchor =
+  anchorMap[item.classId] || "material-info";
 
-              <img
-                src="${component.svg}"
-                alt="${component.name}"
-                class="component-image"
-              >
 
-            </div>
+html += `
+  <a
+    class="component-card component-card-link"
+    href="#${anchor}"
+  >
 
-            <div class="component-label">
+    <div class="component-image-wrap">
 
-              <span
-                class="component-swatch"
-                style="
-                  background:
-                  rgb(
-                    ${color[0]},
-                    ${color[1]},
-                    ${color[2]}
-                  );
-                "
-              ></span>
+      <img
+        src="${component.svg}"
+        alt="${component.name}"
+        class="component-image"
+      >
 
-              <span>
-                ${component.name}
-              </span>
+    </div>
 
-            </div>
+    <div class="component-label">
 
-          </div>
-        `;
+      <span
+        class="component-swatch"
+        style="
+          background:
+          rgb(
+            ${color[0]},
+            ${color[1]},
+            ${color[2]}
+          );
+        "
+      ></span>
+
+      <span>
+        ${component.name}
+      </span>
+
+    </div>
+
+  </a>
+`;
       }
     );
 
