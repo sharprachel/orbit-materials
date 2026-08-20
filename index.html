@@ -42,7 +42,7 @@
         The analyzer is trained on construction materials with reuse potential. Once detected, each material can link to material information, recertification guides, drop-off locations, and next-life suggestions.
       </div>
       
-     <div class="analyzer-grid">
+<div class="analyzer-grid">
 
   <!-- LEFT COLUMN -->
   <div class="analyzer-left">
@@ -69,11 +69,10 @@
       />
 
       <canvas id="segmentation-overlay"></canvas>
-      
+
     </label>
 
     <div class="button-row">
-
       <button id="analyze-button" class="action-btn">
         Analyze Facade
       </button>
@@ -81,34 +80,42 @@
       <button id="clear-button" class="secondary-btn">
         Clear
       </button>
-
     </div>
 
     <div class="materials-panel">
       <h3>Materials Identified</h3>
-      
+
       <div id="materials-results">
         <p class="muted">
-         Detected materials and overlay colours will appear here.
+          Detected materials and overlay colours will appear here.
         </p>
       </div>
     </div>
 
+  </div>
+
+  
   <!-- RIGHT COLUMN -->
   <div class="analyzer-right">
 
     <div class="components-panel">
       <h3>Detected Components</h3>
-      <p class="muted">
-        Detected components will appear here after analysis.
-      </p>
+
+      <div id="components-results">
+        <p class="muted">
+          Detected components will appear here after analysis.
+        </p>
+      </div>
     </div>
 
     <div class="recommendations-panel">
       <h3>Circularity Recommendations</h3>
-      <p class="muted">
-        Reuse guidance will appear here after analysis.
-      </p>
+
+      <div id="recommendations-results">
+        <p class="muted">
+          Reuse guidance will appear here after analysis.
+        </p>
+      </div>
     </div>
 
   </div>
