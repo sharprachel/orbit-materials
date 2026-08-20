@@ -866,3 +866,91 @@ body {
     font-size: 28px;
   }
 }
+/* =========================================================
+   MATERIAL RECERTIFICATION
+   ========================================================= */
+
+.recertification-section {
+  margin-top: 90px;
+}
+
+.recert-material-block {
+  padding: 34px 0 40px;
+
+  border-top: 1px solid var(--line);
+}
+
+.recert-material-title {
+  font-family: 'Oswald', sans-serif;
+
+  font-size: 34px;
+  line-height: 1.05;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 18px;
+}
+
+.recert-steps-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 18px;
+
+  align-items: start;
+}
+
+.recert-step-card {
+  min-width: 0;
+}
+
+.recert-step-heading {
+  font-family: 'Inconsolata', monospace;
+
+  font-size: 18px;
+
+  text-align: center;
+
+  margin-bottom: 10px;
+}
+
+.recert-step-image {
+  width: 100%;
+  height: auto;
+
+  display: block;
+
+  border-radius: 14px;
+
+  margin-bottom: 10px;
+}
+
+.recert-step-copy {
+  font-size: 15px;
+  line-height: 1.55;
+
+  font-weight: 300;
+
+  color: #35373c;
+}
+
+
+@media (max-width: 1200px) {
+
+  .recert-steps-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+@media (max-width: 700px) {
+
+  .recert-steps-grid {
+    grid-template-columns: 1fr;
+  }
+}
