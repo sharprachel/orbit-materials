@@ -241,7 +241,7 @@ body {
   margin-top: 0;
 }
 /* =========================================================
-   ANALYZER LAYOUT FIX
+   ANALYZER
    ========================================================= */
 
 .analyzer-grid {
@@ -257,22 +257,115 @@ body {
   min-width: 0;
 }
 
-.-box {
+
+/* IMAGE VIEWER */
+
+.upload-box {
   width: 100%;
-  min-height: 420px;
+  height: 500px;
   box-sizing: border-box;
+
+  /* slightly darker grey image-viewer background */
+  background: #d8d8dc;
+
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+
+  /* leaves grey visible around the image */
+  padding: 20px;
 }
+
+.upload-box input {
+  display: none;
+}
+
+.upload-placeholder {
+  text-align: center;
+  padding: 40px;
+}
+
+.upload-title {
+  font-family: 'Inconsolata', monospace;
+  font-size: 19px;
+  margin-bottom: 8px;
+}
+
+.upload-subtitle {
+  font-size: 15px;
+  color: var(--muted);
+}
+
+
+/* UPLOADED IMAGE */
+
+.image-preview {
+  display: none;
+
+  max-width: 100%;
+  max-height: 100%;
+
+  width: auto;
+  height: auto;
+
+  object-fit: contain;
+  object-position: center;
+
+  border-radius: 8px;
+}
+
+
+/* BUTTONS */
 
 .button-row {
   width: 100%;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   gap: 12px;
 
-  /* creates more breathing room below white box */
   margin-top: 22px;
   margin-bottom: 24px;
+}
+
+.action-btn,
+.secondary-btn {
+  font-family: 'Inconsolata', monospace;
+  font-size: 15px;
+
+  min-height: 42px;
+  padding: 8px 18px;
+
+  border-radius: 999px;
+  border: none;
+
+  cursor: pointer;
+}
+
+.action-btn {
+  background: var(--pill-dark);
+  color: white;
+}
+
+.secondary-btn {
+  background: var(--pill-light);
+  color: #333;
+}
+
+
+/* RESULTS PANELS */
+
+.materials-panel {
+  margin-top: 0;
 }
 
 .components-panel {
@@ -283,51 +376,34 @@ body {
   margin-top: 34px;
 }
 
-.materials-panel {
-  margin-top: 0;
+.materials-panel h3,
+.components-panel h3,
+.recommendations-panel h3 {
+  font-family: 'Inconsolata', monospace;
+  font-size: 21px;
+  margin: 0 0 12px;
 }
 
+.muted {
+  font-weight: 300;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+
+/* MOBILE */
+
 @media (max-width: 900px) {
+
   .analyzer-grid {
     grid-template-columns: 1fr;
+  }
+
+  .upload-box {
+    height: 350px;
   }
 
   .analyzer-right {
     margin-top: 30px;
   }
-}
-
-/* Keep uploaded facade images contained */
-.upload-box {
-  width: 100%;
-  height: 500px;
-  min-height: 0;
-  box-sizing: border-box;
-}
-
-.image-preview {
-  display: none;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-}
-
-@media (max-width: 900px) {
-  .upload-box {
-    height: 350px;
-  }
-}
-.upload-box {
-  background: #dcdcdf;
-  padding: 18px;
-}
-
-.image-preview {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  border-radius: 8px;
 }
