@@ -296,3 +296,24 @@ body {
     margin-top: 30px;
   }
 }
+/* Keep uploaded facade images contained */
+.upload-box {
+  width: 100%;
+  height: 500px;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+.image-preview {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (max-width: 900px) {
+  .upload-box {
+    height: 350px;
+  }
+}
