@@ -711,3 +711,158 @@ body {
 .hidden-component-card:hover div {
   text-decoration: underline;
 }
+/* =========================================================
+   MATERIAL INFORMATION
+   ========================================================= */
+
+.material-info-section {
+  margin-top: 90px;
+}
+
+.material-section-title {
+  font-family: 'Oswald', sans-serif;
+
+  font-size: 44px;
+  line-height: 1.08;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+
+  margin-bottom: 18px;
+}
+
+.material-section-intro {
+  max-width: 980px;
+
+  margin-bottom: 34px;
+
+  font-size: 17px;
+  line-height: 1.65;
+
+  font-weight: 300;
+
+  color: #35373c;
+}
+
+.material-info-grid {
+  display: grid;
+
+  grid-template-columns:
+    420px
+    minmax(0, 1fr);
+
+  gap: 52px;
+
+  align-items: start;
+
+  padding: 34px 0;
+
+  border-top:
+    1px solid
+    var(--line);
+}
+
+.material-info-media {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.material-duo-grid {
+  display: grid;
+
+  grid-template-columns: 1fr;
+
+  gap: 28px;
+
+  justify-items: center;
+}
+
+.material-diagram-img {
+  display: block;
+
+  width: 100%;
+  max-width: 420px;
+
+  height: auto;
+
+  object-fit: contain;
+}
+
+.material-info-copy {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.material-copy-title {
+  font-family: 'Oswald', sans-serif;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+
+  font-size: 34px;
+  line-height: 1.05;
+
+  margin-bottom: 6px;
+}
+
+.material-copy-subtitle {
+  font-family: 'Inconsolata', monospace;
+
+  font-size: 22px;
+  line-height: 1.2;
+
+  margin-top: 10px;
+}
+
+.material-copy-body {
+  max-width: 760px;
+
+  font-size: 17px;
+  line-height: 1.65;
+
+  font-weight: 300;
+
+  color: #35373c;
+}
+
+
+/* Keep linked sections from hiding under the top of the page */
+
+#dimensional-lumber,
+#brick-stone-masonry,
+#window-frame,
+#door-frame,
+#building-envelope-panel,
+#heavy-timber,
+#structural-steel {
+  scroll-margin-top: 24px;
+}
+
+
+@media (max-width: 1100px) {
+
+  .material-info-grid {
+    grid-template-columns: 1fr;
+
+    gap: 24px;
+  }
+
+  .material-info-media {
+    justify-content: flex-start;
+  }
+
+  .material-diagram-img {
+    max-width: 320px;
+  }
+
+  .material-copy-title {
+    font-size: 28px;
+  }
+}
