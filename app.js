@@ -422,168 +422,152 @@ document.addEventListener("DOMContentLoaded", async function () {
   // DETECTED COMPONENTS
   // =========================================================
 
-  function renderComponentCards(
-    detectedMaterials
-  ) {
+ function renderComponentCards(detectedMaterials) {
 
-    const visibleComponents =
-      detectedMaterials.filter(item =>
-
-        !HIDDEN_VISIBLE_CLASSES.has(
-          item.classId
-        ) &&
-
-        COMPONENT_INFO[
-          item.classId
-        ]
-      );
-
-
-    if (
-      visibleComponents.length === 0
-    ) {
-
-      componentsResults.innerHTML = `
-        <p class="muted">
-          No reusable components detected.
-        </p>
-      `;
-
-      return;
-    }
-
-
-    let html = `
-      <div class="component-grid">
-    `;
-
-
-    visibleComponents.forEach(
-      item => {
-
-        const component =
-          COMPONENT_INFO[
-            item.classId
-          ];
-
-        const color =
-          CLASS_COLORS[
-            item.classId
-          ];
-
-
-const anchorMap = {
-  1: "brick-stone-masonry",
-  2: "door-frame",
-  3: "building-envelope-panel",
-  5: "building-envelope-panel",
-  6: "building-envelope-panel",
-  7: "brick-stone-masonry",
-  8: "building-envelope-panel",
-  10: "window-frame"
-};
-
-const anchor =
-  anchorMap[item.classId] || "material-info";
-
-
-html += `
-  <a
-    class="component-card component-card-link"
-    href="#${anchor}"
-  >
-
-    <div class="component-image-wrap">
-
-      <img
-        src="${component.svg}"
-        alt="${component.name}"
-        class="component-image"
-      >
-
-    </div>
-
-    <div class="component-label">
-
-      <span
-        class="component-swatch"
-        style="
-          background:
-          rgb(
-            ${color[0]},
-            ${color[1]},
-            ${color[2]}
-          );
-        "
-      ></span>
-
-      <span>
-        ${component.name}
-      </span>
-
-    </div>
-
-  </a>
-`;
-      }
+  const visibleComponents =
+    detectedMaterials.filter(item =>
+      !HIDDEN_VISIBLE_CLASSES.has(item.classId) &&
+      COMPONENT_INFO[item.classId]
     );
 
 
-    html += `
-      </div>
+  if (visibleComponents.length === 0) {
+
+    componentsResults.innerHTML = `
+      <p class="muted">
+        No reusable components detected.
+      </p>
     `;
 
-
-    const hasWoodFraming =
-      detectedMaterials.some(
-        item =>
-          WOOD_FRAMING_TRIGGERS.has(
-            item.classId
-          )
-      );
-
-
-    if (hasWoodFraming) {
-
-      html += `
-        <div class="hidden-components">
-
-          <div class="hidden-components-title">
-            Likely Hidden Components
-          </div>
-
-          <div class="hidden-components-copy">
-            Based on the detected cladding system,
-            the facade likely includes structural
-            components behind the visible exterior.
-          </div>
-
-          <a
-            class="hidden-component-card"
-            href="#dimensional-lumber"
-          >
-
-            <img
-              src="./assets/svg/Wood Frame.svg"
-              alt="Dimensional Lumber"
-              class="hidden-component-image"
-            >
-
-            <div>
-              Dimensional Lumber
-            </div>
-
-          </a>
-
-        </div>
-      `;
-    }
-
-
-    componentsResults.innerHTML =
-      html;
+    return;
   }
 
+
+  const anchorMap = {
+    1: "brick-stone-masonry",
+    2: "door-frame",
+    3: "building-envelope-panel",
+    5: "building-envelope-panel",
+    6: "building-envelope-panel",
+    7: "brick-stone-masonry",
+    8: "building-envelope-panel",
+    10: "window-frame"
+  };
+
+
+  let html = `
+    <div class="component-grid">
+  `;
+
+
+  visibleComponents.forEach(item => {
+
+    const component =
+      COMPONENT_INFO[item.classId];
+
+    const color =
+      CLASS_COLORS[item.classId];
+
+    const anchor =
+      anchorMap[item.classId] ||
+      "material-info";
+
+
+    html += `
+      <a
+        class="component-card component-card-link"
+        href="#${anchor}"
+      >
+
+        <div class="component-image-wrap">
+
+          <img
+            src="${component.svg}"
+            alt="${component.name}"
+            class="component-image"
+          >
+
+        </div>
+
+        <div class="component-label">
+
+          <span
+            class="component-swatch"
+            style="
+              background:
+              rgb(
+                ${color[0]},
+                ${color[1]},
+                ${color[2]}
+              );
+            "
+          ></span>
+
+          <span>
+            ${component.name}
+          </span>
+
+        </div>
+
+      </a>
+    `;
+  });
+
+
+  html += `
+    </div>
+  `;
+
+
+  const hasWoodFraming =
+    detectedMaterials.some(
+      item =>
+        WOOD_FRAMING_TRIGGERS.has(
+          item.classId
+        )
+    );
+
+
+  if (hasWoodFraming) {
+
+    html += `
+      <div class="hidden-components">
+
+        <div class="hidden-components-title">
+          Likely Hidden Components
+        </div>
+
+        <div class="hidden-components-copy">
+          Based on the detected cladding system,
+          the facade likely includes structural
+          components behind the visible exterior.
+        </div>
+
+        <a
+          class="hidden-component-card"
+          href="#dimensional-lumber"
+        >
+
+          <img
+            src="./assets/svg/Wood Frame.svg"
+            alt="Dimensional Lumber"
+            class="hidden-component-image"
+          >
+
+          <div>
+            Dimensional Lumber
+          </div>
+
+        </a>
+
+      </div>
+    `;
+  }
+
+
+  componentsResults.innerHTML =
+    html;
+}
 
   // =========================================================
   // CIRCULARITY RECOMMENDATIONS
