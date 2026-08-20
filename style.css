@@ -412,4 +412,5 @@ body {
   position: absolute;
   pointer-events: none;
   border-radius: 8px;
+  z-index: 2;
 }
