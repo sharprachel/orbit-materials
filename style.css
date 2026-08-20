@@ -414,3 +414,40 @@ body {
   border-radius: 8px;
   z-index: 2;
 }
+
+.materials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.material-list-item {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: center;
+  gap: 12px;
+  font-size: 17px;
+}
+
+.swatch {
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+  display: inline-block;
+  border: 1px solid rgba(0,0,0,0.12);
+}
+
+.material-name {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 400;
+}
+
+.limited-panel {
+  margin-top: 28px;
+}
+
+.limited-panel h3 {
+  font-family: 'Inconsolata', monospace;
+  font-size: 18px;
+  margin-bottom: 14px;
+}
