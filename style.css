@@ -123,3 +123,111 @@ body {
     grid-template-columns: 1fr 1fr;
   }
 }
+.analyzer-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 40px;
+  align-items: start;
+  margin-top: 34px;
+}
+
+.button-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.action-btn,
+.secondary-btn {
+  font-family: 'Inconsolata', monospace;
+  font-size: 15px;
+  min-height: 42px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+}
+
+.action-btn {
+  background: var(--pill-dark);
+  color: white;
+}
+
+.secondary-btn {
+  background: var(--pill-light);
+  color: #333;
+}
+
+.upload-box {
+  min-height: 420px;
+  background: white;
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+
+.upload-box input {
+  display: none;
+}
+
+.upload-placeholder {
+  text-align: center;
+  padding: 40px;
+}
+
+.upload-title {
+  font-family: 'Inconsolata', monospace;
+  font-size: 19px;
+  margin-bottom: 8px;
+}
+
+.upload-subtitle {
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.image-preview {
+  display: none;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.materials-panel,
+.components-panel,
+.recommendations-panel {
+  margin-top: 22px;
+}
+
+.materials-panel h3,
+.components-panel h3,
+.recommendations-panel h3 {
+  font-family: 'Inconsolata', monospace;
+  font-size: 21px;
+  margin: 0 0 12px;
+}
+
+.recommendations-panel {
+  margin-top: 34px;
+}
+
+.muted {
+  font-weight: 300;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+@media (max-width: 900px) {
+  .analyzer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .upload-box {
+    min-height: 300px;
+  }
+}
