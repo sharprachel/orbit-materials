@@ -1027,15 +1027,12 @@ body {
 
 .return-top-grid {
   display: grid;
-
   grid-template-columns:
     minmax(0, 0.95fr)
     minmax(0, 1.05fr);
 
   gap: 48px;
-
   align-items: start;
-
   margin-bottom: 48px;
 }
 
@@ -1052,17 +1049,14 @@ body {
 .return-section-title {
   font-size: 54px;
   line-height: 1.08;
-
   margin: 0 0 12px;
 }
 
 .return-project-label {
   display: inline-flex;
-
   width: fit-content;
 
   margin-bottom: 22px;
-
   padding: 6px 12px;
 
   border-radius: 999px;
@@ -1070,9 +1064,7 @@ body {
   background: var(--pill-light);
 
   font-family: 'Inconsolata', monospace;
-
   font-size: 13px;
-
   color: #444;
 }
 
@@ -1082,11 +1074,14 @@ body {
 
 .return-siteplan-img {
   display: block;
-
   width: 100%;
   height: auto;
-
   border-radius: 12px;
+}
+
+.return-intro {
+  margin-top: 0;
+  margin-bottom: 28px;
 }
 
 .return-body {
@@ -1096,7 +1091,6 @@ body {
 
   font-size: 18px;
   line-height: 1.62;
-
   font-weight: 300;
 
   color: #3b3b42;
@@ -1106,19 +1100,16 @@ body {
   margin-top: 28px;
 
   font-family: 'Inconsolata', monospace;
-
   font-size: 16px;
   line-height: 1.55;
 
   color: #4a4a50;
 }
 
-
 @media (max-width: 1100px) {
 
   .return-top-grid {
     grid-template-columns: 1fr;
-
     gap: 32px;
   }
 
