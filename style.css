@@ -882,7 +882,7 @@ body {
 }
 
 .recert-selector-pill {
-  min-height: 48px;
+  min-height: 32px;
 
   display: flex;
   align-items: center;
