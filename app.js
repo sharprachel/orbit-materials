@@ -38,6 +38,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   const recommendationsResults =
     document.getElementById("recommendations-results");
+  
+  const detectedMaterialInfoSection =
+    document.getElementById("detected-material-info");
+
+  const detectedMaterialInfoResults =
+    document.getElementById("detected-material-info-results");
 
 
   // =========================================================
@@ -230,6 +236,106 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   };
 
+  // =========================================================
+// MATERIAL INFORMATION SHOWN AFTER ANALYSIS
+// =========================================================
+
+const MATERIAL_DETAIL_INFO = {
+
+  "dimensional-lumber": {
+    title: "Dimensional Lumber",
+
+    images: [
+      {
+        src: "./assets/material_info/wood_material_info.svg",
+        alt: "Dimensional Lumber"
+      }
+    ],
+
+    ease:
+      "Deconstruction of dimensional lumber is of medium difficulty. Nailed connections must be pried apart, and can risk splitting the wood during removal. Denailing is a labor-intensive activity, and can be time consuming.",
+
+    process:
+      "Wood must be denailed either by a manual or pneumatic nail punch. Ends of wood may need trimming if the wood has split. Lumber should be dried and planed if the surface is damaged or to standardize thickness. Any paint or chemicals should be planed or sanded off before reuse."
+  },
+
+
+  "brick-stone-masonry": {
+    title: "Brick, Stone and Masonry Units",
+
+    images: [
+      {
+        src: "./assets/material_info/brick_material_info.svg",
+        alt: "Brick"
+      },
+      {
+        src: "./assets/material_info/stone_material_info.svg",
+        alt: "Stone"
+      }
+    ],
+
+    ease:
+      "Brick has a high effort for proper deconstruction. Bricks should be removed by hand after mortar is softened, for example with chipping hammers. It is easy to damage bricks if mortar is very hard, which is common in post-1930s cement mortar. Older lime mortar is softer, and bricks often come out intact. Stone blocks can be pried out with equipment, though there is a risk of cracking if not careful.",
+
+    process:
+      "Clean mortar traditionally with hammers and chisels. Bricks are then sorted by quality, for example face bricks versus interior bricks. Stone mortar is cleaned off and any embedded metal removed. Stone may be reshaped, resized, washed, or chemically cleaned where required."
+  },
+
+
+  "window-frame": {
+    title: "Window & Frame",
+
+    images: [
+      {
+        src: "./assets/material_info/window_material_info.svg",
+        alt: "Window and Frame"
+      }
+    ],
+
+    ease:
+      "Removal can be easy if the frame is screwed in. To remove, unscrew and carefully pry the window out. Old wood windows can be removed intact if weights and stops are removed. There is a high risk of glass breakage if pried roughly or if there are hidden fasteners.",
+
+    process:
+      "Wood windows can be stripped, repaired, reglazed, weatherstripped, and repainted. Steel windows may require rust removal and refinishing, while aluminum windows can often be cleaned and have worn gaskets replaced."
+  },
+
+
+  "door-frame": {
+    title: "Door & Frame",
+
+    images: [
+      {
+        src: "./assets/material_info/door_material_info.svg",
+        alt: "Door and Frame"
+      }
+    ],
+
+    ease:
+      "Wood doors are generally very easy to remove. Hinge pins can be removed or hinges unscrewed. Metal frames can be more difficult and may bend during removal. Wood frames can often be removed intact once one side of the wall is opened.",
+
+    process:
+      "After removal, surfaces can be stripped, sanded, repainted or stained. Frames may require repair or resizing and hardware can be cleaned, repaired, re-keyed or replaced."
+  },
+
+
+  "building-envelope-panel": {
+    title: "Building Envelope Panel",
+
+    images: [
+      {
+        src: "./assets/material_info/siding_material_info.svg",
+        alt: "Building Envelope Panel"
+      }
+    ],
+
+    ease:
+      "Panelized systems can be moderately difficult to disassemble depending on the type. Long metal siding panels often come off by removing screws. Wood siding can be pried off but may crack. Stucco and fiber cement generally have more limited reuse potential.",
+
+    process:
+      "Remove sealants and gaskets from cladding panels. Check metal panels for corrosion. Wood siding should be denailed, stripped and refinished. Stucco and fiber cement generally require careful separation and waste handling rather than direct salvage."
+  }
+
+};
 
   // =========================================================
   // LOAD MODEL
@@ -652,6 +758,175 @@ document.addEventListener("DOMContentLoaded", async function () {
       html;
   }
 
+  // =========================================================
+// DETECTED MATERIAL INFORMATION
+// =========================================================
+
+function renderDetectedMaterialInfo(detectedMaterials) {
+
+  if (
+    !detectedMaterialInfoSection ||
+    !detectedMaterialInfoResults
+  ) {
+    return;
+  }
+
+
+  const anchorOrder = [];
+  const seenAnchors = new Set();
+
+
+  // Add information for directly detected materials
+
+  detectedMaterials.forEach(item => {
+
+    const info =
+      RECOMMENDATION_INFO[item.classId];
+
+
+    if (!info) {
+      return;
+    }
+
+
+    const anchor =
+      info.anchor;
+
+
+    if (
+      MATERIAL_DETAIL_INFO[anchor] &&
+      !seenAnchors.has(anchor)
+    ) {
+
+      seenAnchors.add(anchor);
+
+      anchorOrder.push(anchor);
+    }
+
+  });
+
+
+  // Add dimensional lumber when the facade
+  // suggests hidden wood framing
+
+  const hasWoodFraming =
+    detectedMaterials.some(
+      item =>
+        WOOD_FRAMING_TRIGGERS.has(
+          item.classId
+        )
+    );
+
+
+  if (
+    hasWoodFraming &&
+    !seenAnchors.has("dimensional-lumber")
+  ) {
+
+    seenAnchors.add(
+      "dimensional-lumber"
+    );
+
+    anchorOrder.push(
+      "dimensional-lumber"
+    );
+  }
+
+
+  // If nothing relevant was detected,
+  // keep the section hidden
+
+  if (anchorOrder.length === 0) {
+
+    detectedMaterialInfoSection.hidden =
+      true;
+
+    detectedMaterialInfoResults.innerHTML =
+      "";
+
+    return;
+  }
+
+
+  let html = "";
+
+
+  anchorOrder.forEach(anchor => {
+
+    const detail =
+      MATERIAL_DETAIL_INFO[anchor];
+
+
+    const mediaClass =
+      detail.images.length > 1
+        ? "material-info-media material-duo-grid"
+        : "material-info-media";
+
+
+    const imagesHTML =
+      detail.images
+        .map(image => `
+          <img
+            src="${image.src}"
+            alt="${image.alt}"
+            class="material-diagram-img"
+          >
+        `)
+        .join("");
+
+
+    html += `
+
+      <div
+        id="${anchor}"
+        class="material-info-grid"
+      >
+
+        <div class="${mediaClass}">
+          ${imagesHTML}
+        </div>
+
+
+        <div class="material-info-copy">
+
+          <div class="material-copy-title">
+            ${detail.title}
+          </div>
+
+
+          <div class="material-copy-subtitle">
+            Ease of Deconstruction
+          </div>
+
+          <div class="material-copy-body">
+            ${detail.ease}
+          </div>
+
+
+          <div class="material-copy-subtitle">
+            Deconstruction Process
+          </div>
+
+          <div class="material-copy-body">
+            ${detail.process}
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+
+  detectedMaterialInfoResults.innerHTML =
+    html;
+
+
+  detectedMaterialInfoSection.hidden =
+    false;
+}
 
   // =========================================================
   // SEGMENTATION OVERLAY
@@ -874,6 +1149,17 @@ document.addEventListener("DOMContentLoaded", async function () {
     `;
   }
 
+  if (
+  detectedMaterialInfoSection &&
+  detectedMaterialInfoResults
+) {
+
+  detectedMaterialInfoSection.hidden =
+    true;
+
+  detectedMaterialInfoResults.innerHTML =
+    "";
+}
 
   // =========================================================
   // IMAGE UPLOAD
@@ -1033,6 +1319,9 @@ document.addEventListener("DOMContentLoaded", async function () {
           detectedMaterials
         );
 
+        renderDetectedMaterialInfo(
+          detectedMaterials
+        );
 
         analyzeButton.textContent =
           "Analyze Facade";
