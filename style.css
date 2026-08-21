@@ -1025,96 +1025,123 @@ body {
   margin-top: 34px;
 }
 
-.return-top-grid {
-  display: grid;
-  grid-template-columns:
-    minmax(0, 0.95fr)
-    minmax(0, 1.05fr);
 
-  gap: 48px;
-  align-items: start;
-  margin-bottom: 48px;
-}
-
-.return-top-left,
-.return-top-right {
-  min-width: 0;
-}
-
-.return-top-left {
-  display: flex;
-  flex-direction: column;
-}
+/* MAIN PAGE TITLE */
 
 .return-section-title {
-  font-size: 54px;
-  line-height: 1.08;
-  margin: 0 0 12px;
+  margin: 0 0 48px;
+
+  font-size: 68px;
+  line-height: 1.02;
+
+  white-space: nowrap;
 }
 
-.return-project-label {
-  display: inline-flex;
-  width: fit-content;
 
-  margin-bottom: 22px;
-  padding: 6px 12px;
+/* TWO COLUMN CONTENT */
 
-  border-radius: 999px;
+.return-content-grid {
+  display: grid;
 
-  background: var(--pill-light);
+  grid-template-columns:
+    minmax(0, 0.8fr)
+    minmax(0, 1.2fr);
 
-  font-family: 'Inconsolata', monospace;
-  font-size: 13px;
-  color: #444;
+  gap: 70px;
+
+  align-items: start;
+}
+
+
+/* LEFT COLUMN */
+
+.return-plan-column {
+  min-width: 0;
 }
 
 .return-siteplan-wrap {
   width: 100%;
+  max-width: 620px;
 }
 
 .return-siteplan-img {
   display: block;
+
   width: 100%;
   height: auto;
-  border-radius: 12px;
+}
+
+.return-siteplan-caption {
+  margin-top: 12px;
+
+  font-family: 'Inconsolata', monospace;
+  font-size: 14px;
+
+  color: var(--muted);
+}
+
+
+/* RIGHT COLUMN */
+
+.return-text-column {
+  min-width: 0;
 }
 
 .return-intro {
-  margin-top: 0;
+  max-width: 700px;
+
+  /* IMPORTANT:
+     keeps text aligned with top of site plan */
+  margin-top: -7px;
   margin-bottom: 28px;
 }
 
 .return-body {
-  max-width: 650px;
+  max-width: 700px;
 
   margin-bottom: 20px;
 
   font-size: 18px;
   line-height: 1.62;
+
   font-weight: 300;
 
   color: #3b3b42;
 }
 
 .return-caption {
-  margin-top: 28px;
+  margin-top: 30px;
 
   font-family: 'Inconsolata', monospace;
+
   font-size: 16px;
   line-height: 1.55;
 
   color: #4a4a50;
 }
 
-@media (max-width: 1100px) {
 
-  .return-top-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
 
   .return-section-title {
     font-size: 44px;
+    white-space: normal;
+    margin-bottom: 32px;
+  }
+
+  .return-content-grid {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .return-siteplan-wrap {
+    max-width: 600px;
+  }
+
+  .return-intro {
+    margin-top: 0;
   }
 
   .return-body {
