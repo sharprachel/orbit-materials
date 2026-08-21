@@ -44,6 +44,13 @@ body {
   padding: 18px 22px 60px;
 }
 
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  padding-top: 4px;
+}
 
 /* =========================================================
    HEADER / NAVIGATION
