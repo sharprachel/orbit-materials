@@ -2,14 +2,23 @@
 
 
 /* =========================================================
-   GLOBAL
+   GLOBAL DESIGN VARIABLES
+
+   CHANGE THESE VALUES FIRST if you want to adjust the
+   typography or sizing across the entire website.
    ========================================================= */
 
 :root {
+
+  /* ---------- COLOURS ---------- */
+
   --bg: #f5f5f6;
   --panel: #ffffff;
+
   --text: #1f1f23;
+  --body-text: #35373c;
   --muted: #5f6368;
+
   --line: #d6d7db;
 
   --pill-dark: #4d4d52;
@@ -18,13 +27,82 @@
   --viewer: #d8d8dc;
 
   --shadow: 0 6px 18px rgba(0,0,0,0.05);
+
+
+  /* ---------- TYPEFACES ---------- */
+
+  --font-display: 'Oswald', sans-serif;
+  --font-mono: 'Inconsolata', monospace;
+  --font-body: 'Hanken Grotesk', sans-serif;
+
+
+  /* =====================================================
+     TYPOGRAPHY SCALE
+
+     THESE ARE THE MAIN VARIABLES YOU CAN EDIT YOURSELF.
+     ===================================================== */
+
+  /* Main page titles:
+     Identify Reusable Materials...
+     Material Information
+     Material Recertification Guide
+     Return Your Materials */
+  --font-page-title: 68px;
+
+  /* Major material names such as
+     Brick, Stone and Masonry Units */
+  --font-material-title: 34px;
+
+  /* Detected Components,
+     Circularity Recommendations, etc. */
+  --font-section-heading: 21px;
+
+  /* Ease of Deconstruction,
+     Deconstruction Process */
+  --font-subheading: 20px;
+
+  /* Large introductory sentence */
+  --font-intro: 21px;
+
+  /* Standard body copy */
+  --font-body-size: 17px;
+
+  /* Smaller explanatory copy */
+  --font-small: 15px;
+
+  /* Buttons / labels / component names */
+  --font-label: 14px;
+
+  /* Small captions */
+  --font-caption: 13px;
+
+
+  /* ---------- LINE HEIGHT ---------- */
+
+  --line-page-title: 1.02;
+  --line-body: 1.62;
+
+
+  /* ---------- SPACING ---------- */
+
+  --page-section-gap: 82px;
+  --content-gap: 40px;
+
+
+  /* ---------- ANALYZER ---------- */
+
+  /* Change this if you want the upload window taller/shorter */
+  --analyzer-height: 360px;
 }
 
+
+/* =========================================================
+   BASE
+   ========================================================= */
 
 html {
   scroll-behavior: smooth;
 }
-
 
 body {
   margin: 0;
@@ -32,35 +110,41 @@ body {
   background: var(--bg);
   color: var(--text);
 
-  font-family: 'Hanken Grotesk', sans-serif;
+  font-family: var(--font-body);
 }
-
 
 .site-wrap {
   max-width: 1680px;
 
   margin: 0 auto;
 
-  padding: 18px 22px 60px;
+  padding: 14px 22px 60px;
 }
+
+
+/* =========================================================
+   STICKY HEADER
+   ========================================================= */
 
 .site-header {
   position: sticky;
   top: 0;
   z-index: 100;
+
   background: var(--bg);
+
   padding-top: 4px;
 }
 
+
 /* =========================================================
-   HEADER / NAVIGATION
+   LOGO + NAVIGATION
    ========================================================= */
 
 .logo-text {
-  font-family: 'Oswald', sans-serif;
+  font-family: var(--font-display);
 
   letter-spacing: 0.16em;
-
   text-transform: uppercase;
 
   font-size: 34px;
@@ -69,7 +153,6 @@ body {
 
   margin-bottom: 6px;
 }
-
 
 .nav-wrap {
   display: grid;
@@ -81,38 +164,33 @@ body {
   margin: 10px 0 12px;
 }
 
-
 .nav-pill {
-  font-family: 'Inconsolata', monospace;
-
-  font-size: 14px;
-
-  text-align: center;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   min-height: 42px;
 
   padding: 6px 14px;
 
-  border-radius: 999px;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
 
   background: var(--pill-light);
 
+  border-radius: 999px;
+
   color: #333;
 
+  font-family: var(--font-mono);
+  font-size: var(--font-label);
+
+  text-align: center;
   text-decoration: none;
 }
 
-
 .nav-pill.active {
   background: var(--pill-dark);
-
-  color: white;
+  color: #ffffff;
 }
-
 
 .divider {
   border-top: 1px solid #cfcfd4;
@@ -122,68 +200,81 @@ body {
 
 
 /* =========================================================
-   HERO
+   UNIVERSAL PAGE TITLES
    ========================================================= */
 
-.hero-title {
-  font-family: 'Oswald', sans-serif;
+.hero-title,
+.material-section-title,
+.return-section-title {
+  max-width: 1420px;
 
-  font-size: 68px;
-  line-height: 1.02;
+  margin-top: 8px;
+  margin-bottom: 14px;
+
+  font-family: var(--font-display);
+
+  font-size: var(--font-page-title);
+  line-height: var(--line-page-title);
+
+  font-weight: 400;
 
   text-transform: uppercase;
 
-  letter-spacing: 12px;
-
-  margin-top: 8px;
-  margin-bottom: 20px;
-
-  max-width: 1420px;
+  letter-spacing: 0.12em;
 }
-
 
 .hero-title span {
   display: block;
 }
 
 
+/* =========================================================
+   INTRO / GENERAL TEXT
+   ========================================================= */
+
 .hero-body {
-  font-size: 23px;
+  max-width: 980px;
+
+  margin-bottom: 18px;
+
+  font-size: var(--font-intro);
   line-height: 1.45;
 
   font-weight: 300;
-
-  max-width: 980px;
-
-  margin-bottom: 22px;
 }
-
 
 .section-subtitle {
-  font-family: 'Inconsolata', monospace;
+  margin: 22px 0 8px;
 
-  font-size: 18px;
+  font-family: var(--font-mono);
 
-  margin: 28px 0 12px;
+  font-size: var(--font-subheading);
 }
 
-
 .section-body {
-  font-size: 17px;
-  line-height: 1.65;
-
-  font-weight: 300;
-
-  color: #32343a;
-
   max-width: 860px;
 
-  margin-bottom: 20px;
+  margin-bottom: 14px;
+
+  color: var(--body-text);
+
+  font-size: var(--font-body-size);
+  line-height: var(--line-body);
+
+  font-weight: 300;
+}
+
+.muted {
+  color: var(--muted);
+
+  font-size: var(--font-small);
+
+  font-weight: 300;
 }
 
 
 /* =========================================================
-   ANALYZER LAYOUT
+   ANALYZER
    ========================================================= */
 
 .analyzer-grid {
@@ -193,58 +284,57 @@ body {
     minmax(0, 1.1fr)
     minmax(0, 1fr);
 
-  gap: 40px;
+  gap: var(--content-gap);
 
   align-items: start;
 
-  margin-top: 34px;
+  margin-top: 22px;
 }
-
 
 .analyzer-left,
 .analyzer-right {
   min-width: 0;
 }
 
-
 .components-panel {
   margin-top: 0;
 }
 
-
 .recommendations-panel {
-  margin-top: 36px;
+  margin-top: 30px;
 }
-
 
 .components-panel h3,
 .recommendations-panel h3 {
-  font-family: 'Inconsolata', monospace;
-
-  font-size: 21px;
-
   margin: 0 0 12px;
-}
 
+  font-family: var(--font-mono);
 
-.muted {
-  font-size: 16px;
-
-  font-weight: 300;
-
-  color: var(--muted);
+  font-size: var(--font-section-heading);
+  font-weight: 500;
 }
 
 
 /* =========================================================
-   IMAGE VIEWER
+   UPLOAD / IMAGE VIEWER
    ========================================================= */
 
 .upload-box {
   width: 100%;
-  height: 500px;
+  height: var(--analyzer-height);
 
   box-sizing: border-box;
+
+  padding: 18px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  overflow: hidden;
 
   background: var(--viewer);
 
@@ -252,48 +342,32 @@ body {
 
   box-shadow: var(--shadow);
 
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  overflow: hidden;
-
   cursor: pointer;
-
-  position: relative;
-
-  padding: 20px;
 }
-
 
 .upload-box input {
   display: none;
 }
 
-
 .upload-placeholder {
+  padding: 30px;
+
   text-align: center;
-
-  padding: 40px;
 }
-
 
 .upload-title {
-  font-family: 'Inconsolata', monospace;
+  margin-bottom: 7px;
 
-  font-size: 19px;
+  font-family: var(--font-mono);
 
-  margin-bottom: 8px;
+  font-size: 18px;
 }
-
 
 .upload-subtitle {
-  font-size: 15px;
-
   color: var(--muted);
-}
 
+  font-size: var(--font-small);
+}
 
 .image-preview {
   display: none;
@@ -310,17 +384,16 @@ body {
   border-radius: 8px;
 }
 
-
 #segmentation-overlay {
   display: none;
 
   position: absolute;
 
+  z-index: 2;
+
   pointer-events: none;
 
   border-radius: 8px;
-
-  z-index: 2;
 }
 
 
@@ -331,46 +404,39 @@ body {
 .button-row {
   width: 100%;
 
+  margin-top: 16px;
+  margin-bottom: 18px;
+
   display: flex;
 
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
   gap: 12px;
-
-  margin-top: 22px;
-  margin-bottom: 24px;
 }
-
 
 .action-btn,
 .secondary-btn {
-  font-family: 'Inconsolata', monospace;
+  min-height: 40px;
 
-  font-size: 15px;
-
-  min-height: 42px;
-
-  padding: 8px 18px;
-
-  border-radius: 999px;
+  padding: 7px 18px;
 
   border: none;
+  border-radius: 999px;
+
+  font-family: var(--font-mono);
+  font-size: var(--font-label);
 
   cursor: pointer;
 }
 
-
 .action-btn {
   background: var(--pill-dark);
-
   color: white;
 }
 
-
 .secondary-btn {
   background: var(--pill-light);
-
   color: #333;
 }
 
@@ -385,11 +451,10 @@ body {
   grid-template-columns:
     repeat(3, minmax(0, 1fr));
 
-  gap: 24px 18px;
+  gap: 20px 18px;
 
-  margin-top: 18px;
+  margin-top: 16px;
 }
-
 
 .component-card {
   min-width: 0;
@@ -404,37 +469,36 @@ body {
 
   background: transparent;
 
-  border-radius: 0;
+  color: inherit;
 
-  box-shadow: none;
+  text-decoration: none;
 }
-
 
 .component-image-wrap {
   width: 100%;
-  height: 145px;
+  height: 125px;
+
+  margin-bottom: 7px;
 
   display: flex;
 
   align-items: center;
   justify-content: center;
-
-  margin-bottom: 8px;
 }
-
 
 .component-image {
   display: block;
 
-  max-width: 150px;
-  max-height: 145px;
+  max-width: 135px;
+  max-height: 125px;
 
   width: auto;
   height: auto;
 
   object-fit: contain;
-}
 
+  transition: transform 0.18s ease;
+}
 
 .component-label {
   display: flex;
@@ -444,13 +508,12 @@ body {
 
   gap: 7px;
 
-  font-family: 'Inconsolata', monospace;
+  font-family: var(--font-mono);
 
-  font-size: 14px;
+  font-size: var(--font-label);
 
   text-align: center;
 }
-
 
 .component-swatch {
   width: 11px;
@@ -460,50 +523,53 @@ body {
 
   border-radius: 3px;
 
-  border:
-    1px solid
-    rgba(0,0,0,0.12);
+  border: 1px solid rgba(0,0,0,0.12);
+}
+
+.component-card-link:hover .component-image {
+  transform: scale(1.05);
+}
+
+.component-card-link:hover .component-label {
+  text-decoration: underline;
 }
 
 
 /* =========================================================
-   HIDDEN COMPONENTS
+   LIKELY HIDDEN COMPONENTS
    ========================================================= */
 
 .hidden-components {
-  margin-top: 34px;
+  margin-top: 28px;
 
-  padding-top: 24px;
+  padding-top: 20px;
 
   border-top: 1px solid var(--line);
 }
 
-
 .hidden-components-title {
-  font-family: 'Inconsolata', monospace;
+  margin-bottom: 7px;
 
-  font-size: 17px;
+  font-family: var(--font-mono);
 
-  margin-bottom: 8px;
+  font-size: var(--font-section-heading);
 }
-
 
 .hidden-components-copy {
   max-width: 520px;
 
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 
-  font-size: 15px;
+  color: var(--muted);
+
+  font-size: var(--font-small);
   line-height: 1.55;
 
   font-weight: 300;
-
-  color: var(--muted);
 }
 
-
 .hidden-component-card {
-  width: 160px;
+  width: 150px;
 
   display: flex;
 
@@ -515,21 +581,28 @@ body {
 
   color: inherit;
 
-  text-decoration: none;
-
-  font-family: 'Inconsolata', monospace;
-
-  font-size: 14px;
+  font-family: var(--font-mono);
+  font-size: var(--font-label);
 
   text-align: center;
+  text-decoration: none;
 }
 
-
 .hidden-component-image {
-  width: 135px;
-  height: 135px;
+  width: 125px;
+  height: 125px;
 
   object-fit: contain;
+
+  transition: transform 0.18s ease;
+}
+
+.hidden-component-card:hover .hidden-component-image {
+  transform: scale(1.05);
+}
+
+.hidden-component-card:hover {
+  text-decoration: underline;
 }
 
 
@@ -538,86 +611,73 @@ body {
    ========================================================= */
 
 .recommendations-list {
+  margin-top: 14px;
+
   display: flex;
 
   flex-direction: column;
 
-  gap: 12px;
-
-  margin-top: 16px;
+  gap: 11px;
 }
 
-
 .recommendation-card {
-  padding: 14px 16px;
+  padding: 13px 15px;
 
-  background:
-    rgba(255,255,255,0.72);
+  background: rgba(255,255,255,0.72);
 
-  border:
-    1px solid
-    rgba(0,0,0,0.05);
-
+  border: 1px solid rgba(0,0,0,0.05);
   border-radius: 16px;
 }
 
-
 .recommendation-header {
+  margin-bottom: 7px;
+
   display: flex;
 
   justify-content: space-between;
   align-items: center;
 
   gap: 16px;
-
-  margin-bottom: 8px;
 }
 
-
 .recommendation-name {
-  font-family: 'Inconsolata', monospace;
+  font-family: var(--font-mono);
 
   font-size: 16px;
 }
 
-
 .recommendation-badge {
-  font-family: 'Inconsolata', monospace;
-
-  font-size: 12px;
-
   padding: 4px 9px;
 
   background: var(--pill-light);
 
   border-radius: 999px;
 
+  font-family: var(--font-mono);
+  font-size: var(--font-caption);
+
   white-space: nowrap;
 }
 
-
 .recommendation-copy {
-  margin-bottom: 8px;
+  margin-bottom: 7px;
 
-  font-size: 14px;
+  color: #45474c;
+
+  font-size: var(--font-label);
   line-height: 1.5;
 
   font-weight: 300;
-
-  color: #45474c;
 }
 
-
 .recommendation-link {
-  font-family: 'Inconsolata', monospace;
-
-  font-size: 13px;
-
   color: #333;
+
+  font-family: var(--font-mono);
+  font-size: var(--font-caption);
 
   text-decoration: none;
 }
-
 
 .recommendation-link:hover {
   text-decoration: underline;
@@ -625,131 +685,24 @@ body {
 
 
 /* =========================================================
-   RESPONSIVE
-   ========================================================= */
-
-@media (max-width: 1200px) {
-
-  .component-grid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-  }
-}
-
-
-@media (max-width: 1100px) {
-
-  .hero-title {
-    font-size: 42px;
-
-    line-height: 1.1;
-
-    letter-spacing: 7px;
-  }
-
-
-  .hero-body {
-    font-size: 19px;
-  }
-
-
-  .nav-wrap {
-    grid-template-columns:
-      1fr 1fr;
-  }
-}
-
-
-@media (max-width: 700px) {
-
-  .analyzer-grid {
-    grid-template-columns: 1fr;
-  }
-
-
-  .upload-box {
-    height: 350px;
-  }
-
-
-  .analyzer-right {
-    margin-top: 30px;
-  }
-}
-
-
-@media (max-width: 600px) {
-
-  .component-grid {
-    grid-template-columns: 1fr;
-  }
-}
-.component-card-link {
-  color: inherit;
-  text-decoration: none;
-}
-
-.component-card-link:hover .component-image {
-  transform: scale(1.05);
-}
-
-.component-card-link:hover .component-label {
-  text-decoration: underline;
-}
-
-.component-image {
-  transition: transform 0.18s ease;
-}
-/* Match hidden-component hover behaviour to detected components */
-
-.hidden-component-card {
-  color: inherit;
-  text-decoration: none;
-}
-
-.hidden-component-image {
-  transition: transform 0.18s ease;
-}
-
-.hidden-component-card:hover .hidden-component-image {
-  transform: scale(1.05);
-}
-
-.hidden-component-card:hover div {
-  text-decoration: underline;
-}
-/* =========================================================
    MATERIAL INFORMATION
    ========================================================= */
 
 .material-info-section {
-  margin-top: 90px;
-}
-
-.material-section-title {
-  font-family: 'Oswald', sans-serif;
-
-  font-size: 44px;
-  line-height: 1.08;
-
-  text-transform: uppercase;
-
-  letter-spacing: 0.08em;
-
-  margin-bottom: 18px;
+  margin-top: var(--page-section-gap);
 }
 
 .material-section-intro {
   max-width: 980px;
 
-  margin-bottom: 34px;
+  margin-bottom: 32px;
 
-  font-size: 17px;
-  line-height: 1.65;
+  color: var(--body-text);
+
+  font-size: var(--font-body-size);
+  line-height: var(--line-body);
 
   font-weight: 300;
-
-  color: #35373c;
 }
 
 .material-info-grid {
@@ -759,15 +712,13 @@ body {
     420px
     minmax(0, 1fr);
 
-  gap: 52px;
+  gap: 50px;
 
   align-items: start;
 
-  padding: 34px 0;
+  padding: 32px 0;
 
-  border-top:
-    1px solid
-    var(--line);
+  border-top: 1px solid var(--line);
 }
 
 .material-info-media {
@@ -782,7 +733,7 @@ body {
 
   grid-template-columns: 1fr;
 
-  gap: 28px;
+  gap: 26px;
 
   justify-items: center;
 }
@@ -803,44 +754,44 @@ body {
 
   flex-direction: column;
 
-  gap: 10px;
+  gap: 9px;
 }
 
 .material-copy-title {
-  font-family: 'Oswald', sans-serif;
+  margin-bottom: 6px;
+
+  font-family: var(--font-display);
+
+  font-size: var(--font-material-title);
+  line-height: 1.05;
 
   text-transform: uppercase;
 
   letter-spacing: 0.08em;
-
-  font-size: 34px;
-  line-height: 1.05;
-
-  margin-bottom: 6px;
 }
 
 .material-copy-subtitle {
-  font-family: 'Inconsolata', monospace;
+  margin-top: 9px;
 
-  font-size: 22px;
+  font-family: var(--font-mono);
+
+  font-size: var(--font-subheading);
   line-height: 1.2;
-
-  margin-top: 10px;
 }
 
 .material-copy-body {
   max-width: 760px;
 
-  font-size: 17px;
-  line-height: 1.65;
+  color: var(--body-text);
+
+  font-size: var(--font-body-size);
+  line-height: var(--line-body);
 
   font-weight: 300;
-
-  color: #35373c;
 }
 
 
-/* Keep linked sections from hiding under the top of the page */
+/* Linked material anchors */
 
 #dimensional-lumber,
 #brick-stone-masonry,
@@ -849,65 +800,54 @@ body {
 #building-envelope-panel,
 #heavy-timber,
 #structural-steel {
-  scroll-margin-top: 24px;
+  scroll-margin-top: 150px;
 }
 
 
-@media (max-width: 1100px) {
-
-  .material-info-grid {
-    grid-template-columns: 1fr;
-
-    gap: 24px;
-  }
-
-  .material-info-media {
-    justify-content: flex-start;
-  }
-
-  .material-diagram-img {
-    max-width: 320px;
-  }
-
-  .material-copy-title {
-    font-size: 28px;
-  }
-}
 /* =========================================================
-   RECERTIFICATION PAGE SELECTOR
+   MATERIAL / RECERTIFICATION SELECTORS
    ========================================================= */
 
-.recert-selector-section {
-  margin-top: 42px;
-  margin-bottom: 60px;
-}
-
+.material-info-selector,
 .recert-selector-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
   gap: 14px;
 }
 
+.material-info-selector {
+  margin: 32px 0 48px;
+}
+
+.recert-selector-section {
+  margin-top: 38px;
+  margin-bottom: 54px;
+}
+
 .recert-selector-pill {
-  min-height: 18px;
+  min-height: 40px;
+
+  padding: 7px 16px;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
-
-  padding: 8px 16px;
 
   background: var(--pill-light);
 
   border-radius: 999px;
 
   color: #333;
-  text-decoration: none;
 
-  font-family: 'Inconsolata', monospace;
-  font-size: 14px;
+  font-family: var(--font-mono);
+  font-size: var(--font-label);
 
   text-align: center;
+  text-decoration: none;
 
   transition:
     background 0.18s ease,
@@ -917,45 +857,38 @@ body {
 
 .recert-selector-pill:hover {
   background: var(--pill-dark);
+
   color: white;
+
   transform: translateY(-1px);
 }
 
-@media (max-width: 1100px) {
-  .recert-selector-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
 
-@media (max-width: 600px) {
-  .recert-selector-grid {
-    grid-template-columns: 1fr;
-  }
-}
 /* =========================================================
    RECERTIFICATION MATERIAL SECTIONS
    ========================================================= */
 
 .recert-material-section {
-  margin-top: 72px;
-  padding-top: 28px;
+  margin-top: 68px;
+
+  padding-top: 26px;
 
   border-top: 1px solid var(--line);
 
-  scroll-margin-top: 24px;
+  scroll-margin-top: 150px;
 }
 
 .recert-material-title {
-  font-family: 'Oswald', sans-serif;
+  margin-bottom: 24px;
 
-  font-size: 38px;
+  font-family: var(--font-display);
+
+  font-size: var(--font-material-title);
   line-height: 1.08;
 
   text-transform: uppercase;
 
   letter-spacing: 0.08em;
-
-  margin-bottom: 26px;
 }
 
 .recert-steps-grid {
@@ -974,78 +907,58 @@ body {
 }
 
 .recert-step-number {
-  font-family: 'Oswald', sans-serif;
-
-  font-size: 34px;
-  line-height: 1;
+  margin-bottom: 7px;
 
   color: #8a8b90;
 
-  margin-bottom: 8px;
+  font-family: var(--font-display);
+
+  font-size: var(--font-material-title);
+  line-height: 1;
 }
 
 .recert-step-heading {
-  font-family: 'Inconsolata', monospace;
+  margin-bottom: 11px;
 
-  font-size: 18px;
+  font-family: var(--font-mono);
 
-  margin-bottom: 12px;
+  font-size: var(--font-subheading);
 }
 
 .recert-step-image {
+  display: block;
+
   width: 100%;
   height: auto;
 
-  display: block;
+  margin-bottom: 11px;
 
   border-radius: 12px;
-
-  margin-bottom: 12px;
 }
 
 .recert-step-copy {
-  font-size: 15px;
+  color: var(--body-text);
+
+  font-size: var(--font-small);
   line-height: 1.55;
 
   font-weight: 300;
-
-  color: #35373c;
 }
 
-@media (max-width: 1200px) {
-  .recert-steps-grid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-  }
-}
 
-@media (max-width: 700px) {
-  .recert-steps-grid {
-    grid-template-columns: 1fr;
-  }
-}
 /* =========================================================
-   RETURN YOUR MATERIALS PAGE
+   RETURN YOUR MATERIALS
    ========================================================= */
 
 .return-materials-section {
-  margin-top: 34px;
+  margin-top: 28px;
 }
 
-
-/* MAIN PAGE TITLE */
-
 .return-section-title {
-  margin: 0 0 48px;
-
-  font-size: 68px;
-  line-height: 1.02;
+  margin-bottom: 42px;
 
   white-space: nowrap;
 }
-
-
-/* TWO COLUMN CONTENT */
 
 .return-content-grid {
   display: grid;
@@ -1054,20 +967,19 @@ body {
     minmax(0, 0.8fr)
     minmax(0, 1.2fr);
 
-  gap: 70px;
+  gap: 66px;
 
   align-items: start;
 }
 
-
-/* LEFT COLUMN */
-
-.return-plan-column {
+.return-plan-column,
+.return-text-column {
   min-width: 0;
 }
 
 .return-siteplan-wrap {
   width: 100%;
+
   max-width: 620px;
 }
 
@@ -1079,67 +991,103 @@ body {
 }
 
 .return-siteplan-caption {
-  margin-top: 12px;
-
-  font-family: 'Inconsolata', monospace;
-  font-size: 14px;
+  margin-top: 11px;
 
   color: var(--muted);
-}
 
-
-/* RIGHT COLUMN */
-
-.return-text-column {
-  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-label);
 }
 
 .return-intro {
   max-width: 700px;
 
-  /* IMPORTANT:
-     keeps text aligned with top of site plan */
-  margin-top: -7px;
-  margin-bottom: 28px;
+  margin-top: -5px;
+  margin-bottom: 26px;
 }
 
 .return-body {
   max-width: 700px;
 
-  margin-bottom: 20px;
-
-  font-size: 18px;
-  line-height: 1.62;
-
-  font-weight: 300;
+  margin-bottom: 18px;
 
   color: #3b3b42;
+
+  font-size: var(--font-body-size);
+  line-height: var(--line-body);
+
+  font-weight: 300;
 }
 
 .return-caption {
-  margin-top: 30px;
-
-  font-family: 'Inconsolata', monospace;
-
-  font-size: 16px;
-  line-height: 1.55;
+  margin-top: 28px;
 
   color: #4a4a50;
+
+  font-family: var(--font-mono);
+
+  font-size: var(--font-small);
+  line-height: 1.55;
 }
 
 
-/* RESPONSIVE */
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+  .component-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .recert-steps-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
 
 @media (max-width: 1100px) {
 
+  :root {
+    --font-page-title: 46px;
+    --font-intro: 19px;
+  }
+
+  .nav-wrap {
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+  .material-info-grid {
+    grid-template-columns: 1fr;
+
+    gap: 24px;
+  }
+
+  .material-info-media {
+    justify-content: flex-start;
+  }
+
+  .material-diagram-img {
+    max-width: 320px;
+  }
+
+  .material-info-selector,
+  .recert-selector-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
   .return-section-title {
-    font-size: 44px;
     white-space: normal;
-    margin-bottom: 32px;
   }
 
   .return-content-grid {
     grid-template-columns: 1fr;
+
     gap: 34px;
   }
 
@@ -1155,22 +1103,41 @@ body {
     max-width: none;
   }
 }
-.material-info-selector {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
 
-  margin: 34px 0 50px;
-}
 
-@media (max-width: 1100px) {
-  .material-info-selector {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (max-width: 700px) {
+
+  :root {
+    --font-page-title: 38px;
+    --font-material-title: 28px;
+    --font-section-heading: 19px;
+    --font-subheading: 18px;
+    --font-body-size: 16px;
+    --analyzer-height: 300px;
+  }
+
+  .analyzer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .analyzer-right {
+    margin-top: 28px;
+  }
+
+  .recert-steps-grid {
+    grid-template-columns: 1fr;
   }
 }
 
+
 @media (max-width: 600px) {
-  .material-info-selector {
+
+  .component-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .material-info-selector,
+  .recert-selector-grid {
     grid-template-columns: 1fr;
   }
 }
