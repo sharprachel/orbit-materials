@@ -47,31 +47,31 @@
      Material Information
      Material Recertification Guide
      Return Your Materials */
-  --font-page-title: 68px;
+  --font-page-title: 62px;
 
   /* Major material names such as
      Brick, Stone and Masonry Units */
-  --font-material-title: 34px;
+  --font-material-title: 30px;
 
   /* Detected Components,
      Circularity Recommendations, etc. */
-  --font-section-heading: 21px;
+  --font-section-heading: 20px;
 
   /* Ease of Deconstruction,
      Deconstruction Process */
   --font-subheading: 20px;
 
   /* Large introductory sentence */
-  --font-intro: 21px;
+  --font-intro: 20px;
 
   /* Standard body copy */
-  --font-body-size: 17px;
+  --font-body-size: 15px;
 
   /* Smaller explanatory copy */
   --font-small: 15px;
 
   /* Buttons / labels / component names */
-  --font-label: 14px;
+  --font-label: 13px;
 
   /* Small captions */
   --font-caption: 13px;
@@ -85,8 +85,8 @@
 
   /* ---------- SPACING ---------- */
 
-  --page-section-gap: 82px;
-  --content-gap: 40px;
+  --page-section-gap: 80px;
+  --content-gap: 35px;
 
 
   /* ---------- ANALYZER ---------- */
