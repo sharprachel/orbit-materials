@@ -1141,3 +1141,191 @@ body {
     grid-template-columns: 1fr;
   }
 }
+/* =========================================================
+   FINAL GLOBAL LAYOUT STANDARDIZATION
+   Keep this section at the bottom of style.css
+   ========================================================= */
+
+:root {
+  /* ---------- GLOBAL PAGE ---------- */
+  --page-max-width: 1680px;
+  --page-side-padding: 22px;
+
+  /* ---------- HEADER ---------- */
+  --logo-size: 34px;
+  --nav-font-size: 14px;
+  --nav-height: 42px;
+  --nav-gap: 14px;
+
+  /* ---------- PAGE TITLES ---------- */
+  --page-title-size: 68px;
+  --page-title-spacing: 12px;
+
+  /* ---------- BODY TYPE ---------- */
+  --intro-size: 23px;
+  --body-size: 17px;
+  --label-size: 18px;
+}
+
+
+/* =========================================================
+   PAGE CONTAINER
+   ========================================================= */
+
+.site-wrap {
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: 18px var(--page-side-padding) 60px;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SHARED HEADER
+   ========================================================= */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  background: var(--bg);
+
+  padding: 0;
+  margin: 0;
+}
+
+
+/* LOGO */
+
+.site-header .logo-text {
+  font-family: 'Oswald', sans-serif;
+  font-size: var(--logo-size);
+  font-weight: 500;
+
+  line-height: 0.92;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+
+  margin: 0 0 6px 0;
+  padding: 0;
+}
+
+
+/* NAVIGATION */
+
+.site-header .nav-wrap {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: var(--nav-gap);
+
+  width: 100%;
+
+  margin: 10px 0 12px;
+  padding: 0;
+}
+
+
+/* NAV PILLS */
+
+.site-header .nav-pill {
+  box-sizing: border-box;
+
+  width: 100%;
+  min-height: var(--nav-height);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 14px;
+
+  font-family: 'Inconsolata', monospace;
+  font-size: var(--nav-font-size);
+  line-height: 1.15;
+
+  text-align: center;
+  text-decoration: none;
+
+  border-radius: 999px;
+
+  background: var(--pill-light);
+  color: #333;
+}
+
+
+/* ACTIVE NAV PILL */
+
+.site-header .nav-pill.active {
+  background: var(--pill-dark);
+  color: #fff;
+}
+
+
+/* HEADER DIVIDER */
+
+.site-header .divider {
+  width: 100%;
+
+  border: 0;
+  border-top: 1px solid #cfcfd4;
+
+  margin: 10px 0 0;
+  padding: 0;
+}
+
+
+/* =========================================================
+   PAGE TITLES
+   ========================================================= */
+
+.hero-title,
+.material-section-title,
+.recert-section-title {
+  width: 100%;
+  max-width: none;
+
+  box-sizing: border-box;
+
+  font-family: 'Oswald', sans-serif;
+
+  font-size: var(--page-title-size) !important;
+  font-weight: 400;
+
+  line-height: 1.02 !important;
+
+  letter-spacing: var(--page-title-spacing);
+  text-transform: uppercase;
+
+  margin: 18px 0 12px !important;
+  padding: 0;
+}
+
+
+/* =========================================================
+   STANDARD TYPOGRAPHY
+   ========================================================= */
+
+.hero-body {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: var(--intro-size);
+  font-weight: 300;
+  line-height: 1.45;
+}
+
+.section-subtitle {
+  font-family: 'Inconsolata', monospace;
+  font-size: var(--label-size);
+}
+
+.section-body {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: var(--body-size);
+  font-weight: 300;
+  line-height: 1.55;
+}
