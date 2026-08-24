@@ -4,8 +4,8 @@
 /* =========================================================
    GLOBAL DESIGN VARIABLES
 
-   CHANGE THESE VALUES FIRST if you want to adjust the
-   typography or sizing across the entire website.
+   These are the main values to change if you want to
+   adjust typography or sizing across the entire website.
    ========================================================= */
 
 :root {
@@ -36,38 +36,27 @@
   --font-body: 'Hanken Grotesk', sans-serif;
 
 
-  /* =====================================================
-     TYPOGRAPHY SCALE
+  /* ---------- TYPOGRAPHY SCALE ---------- */
 
-     THESE ARE THE MAIN VARIABLES YOU CAN EDIT YOURSELF.
-     ===================================================== */
-
-  /* Main page titles:
-     Identify Reusable Materials...
-     Material Information
-     Material Recertification Guide
-     Return Your Materials */
+  /* All main page titles */
   --font-page-title: 62px;
 
-  /* Major material names such as
-     Brick, Stone and Masonry Units */
+  /* Brick, Stone & Masonry / Heavy Timber / etc. */
   --font-material-title: 30px;
 
-  /* Detected Components,
-     Circularity Recommendations, etc. */
+  /* Detected Components / Circularity Recommendations */
   --font-section-heading: 20px;
 
-  /* Ease of Deconstruction,
-     Deconstruction Process */
+  /* Ease of Deconstruction / Deconstruction Process */
   --font-subheading: 20px;
 
-  /* Large introductory sentence */
+  /* Large introductory text */
   --font-intro: 20px;
 
-  /* Standard body copy */
+  /* Standard body text */
   --font-body-size: 15px;
 
-  /* Smaller explanatory copy */
+  /* Smaller explanatory text */
   --font-small: 15px;
 
   /* Buttons / labels / component names */
@@ -83,15 +72,30 @@
   --line-body: 1.62;
 
 
-  /* ---------- SPACING ---------- */
+  /* ---------- PAGE LAYOUT ---------- */
+
+  --page-max-width: 1680px;
+  --page-side-padding: 22px;
 
   --page-section-gap: 80px;
   --content-gap: 35px;
 
 
+  /* ---------- HEADER ---------- */
+
+  --logo-size: 34px;
+  --nav-height: 42px;
+  --nav-gap: 14px;
+
+
+  /* ---------- TITLES ---------- */
+
+  --page-title-spacing: 12px;
+
+
   /* ---------- ANALYZER ---------- */
 
-  /* Change this if you want the upload window taller/shorter */
+  /* Change this if you want the upload viewer taller/shorter */
   --analyzer-height: 360px;
 }
 
@@ -114,16 +118,19 @@ body {
 }
 
 .site-wrap {
-  max-width: 1680px;
+  width: 100%;
+  max-width: var(--page-max-width);
 
   margin: 0 auto;
 
-  padding: 14px 22px 60px;
+  padding: 18px var(--page-side-padding) 60px;
+
+  box-sizing: border-box;
 }
 
 
 /* =========================================================
-   STICKY HEADER
+   SHARED STICKY HEADER
    ========================================================= */
 
 .site-header {
@@ -131,9 +138,14 @@ body {
   top: 0;
   z-index: 100;
 
-  background: var(--bg);
+  width: 100%;
 
-  padding-top: 4px;
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+
+  background: var(--bg);
 }
 
 
@@ -142,30 +154,40 @@ body {
    ========================================================= */
 
 .logo-text {
+  margin: 0 0 6px;
+  padding: 0;
+
   font-family: var(--font-display);
 
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-
-  font-size: 34px;
+  font-size: var(--logo-size);
   line-height: 0.92;
+
   font-weight: 500;
 
-  margin-bottom: 6px;
+  letter-spacing: 0.16em;
+
+  text-transform: uppercase;
 }
 
 .nav-wrap {
+  width: 100%;
+
   display: grid;
 
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
 
-  gap: 14px;
+  gap: var(--nav-gap);
 
   margin: 10px 0 12px;
+  padding: 0;
 }
 
 .nav-pill {
-  min-height: 42px;
+  width: 100%;
+  min-height: var(--nav-height);
+
+  box-sizing: border-box;
 
   padding: 6px 14px;
 
@@ -182,6 +204,7 @@ body {
 
   font-family: var(--font-mono);
   font-size: var(--font-label);
+  line-height: 1.15;
 
   text-align: center;
   text-decoration: none;
@@ -189,27 +212,42 @@ body {
 
 .nav-pill.active {
   background: var(--pill-dark);
+
   color: #ffffff;
 }
 
 .divider {
-  border-top: 1px solid #cfcfd4;
+  width: 100%;
 
-  margin: 10px 0 14px;
+  margin: 10px 0 0;
+  padding: 0;
+
+  border: 0;
+  border-top: 1px solid #cfcfd4;
 }
 
 
 /* =========================================================
    UNIVERSAL PAGE TITLES
+
+   These rules control the title at the top of:
+   - Material Analyzer
+   - Material Information
+   - Material Recertification Guide
+   - Return Your Materials
    ========================================================= */
 
 .hero-title,
 .material-section-title,
+.recert-section-title,
 .return-section-title {
-  max-width: 1420px;
+  width: 100%;
+  max-width: none;
 
-  margin-top: 8px;
-  margin-bottom: 14px;
+  box-sizing: border-box;
+
+  margin: 18px 0 18px;
+  padding: 0;
 
   font-family: var(--font-display);
 
@@ -218,13 +256,46 @@ body {
 
   font-weight: 400;
 
-  text-transform: uppercase;
+  letter-spacing: var(--page-title-spacing);
 
-  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
+
+/* Analyzer title intentionally contains spans */
 .hero-title span {
   display: block;
+}
+
+
+/* Secondary page titles stay on one line on desktop */
+
+.material-info-section > .hero-title,
+.material-info-section > .material-section-title,
+.recert-page-intro > .hero-title,
+.return-materials-section > .hero-title,
+.return-materials-section > .return-section-title {
+  white-space: nowrap;
+}
+
+
+/* Remove page-specific offsets so all secondary-page titles
+   begin at the same position beneath the header */
+
+.material-info-section,
+.return-materials-section,
+.recert-page-intro,
+#analyzer {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+
+/* Dynamic material information on the ANALYZER page should
+   still have breathing room beneath the analyzer */
+
+#detected-material-info {
+  margin-top: var(--page-section-gap);
 }
 
 
@@ -432,11 +503,13 @@ body {
 
 .action-btn {
   background: var(--pill-dark);
+
   color: white;
 }
 
 .secondary-btn {
   background: var(--pill-light);
+
   color: #333;
 }
 
@@ -688,13 +761,10 @@ body {
    MATERIAL INFORMATION
    ========================================================= */
 
-.material-info-section {
-  margin-top: var(--page-section-gap);
-}
-
 .material-section-intro {
   max-width: 980px;
 
+  margin-top: 0;
   margin-bottom: 32px;
 
   color: var(--body-text);
@@ -950,13 +1020,7 @@ body {
    RETURN YOUR MATERIALS
    ========================================================= */
 
-.return-materials-section {
-  margin-top: 28px;
-}
-
 .return-section-title {
-  margin-bottom: 42px;
-
   white-space: nowrap;
 }
 
@@ -1081,10 +1145,6 @@ body {
       repeat(2, minmax(0, 1fr));
   }
 
-  .return-section-title {
-    white-space: normal;
-  }
-
   .return-content-grid {
     grid-template-columns: 1fr;
 
@@ -1101,6 +1161,18 @@ body {
 
   .return-body {
     max-width: none;
+  }
+
+
+  /* Allow long secondary-page titles to wrap
+     on narrower screens */
+
+  .material-info-section > .hero-title,
+  .material-info-section > .material-section-title,
+  .recert-page-intro > .hero-title,
+  .return-materials-section > .hero-title,
+  .return-materials-section > .return-section-title {
+    white-space: normal;
   }
 }
 
@@ -1140,192 +1212,4 @@ body {
   .recert-selector-grid {
     grid-template-columns: 1fr;
   }
-}
-/* =========================================================
-   FINAL GLOBAL LAYOUT STANDARDIZATION
-   Keep this section at the bottom of style.css
-   ========================================================= */
-
-:root {
-  /* ---------- GLOBAL PAGE ---------- */
-  --page-max-width: 1680px;
-  --page-side-padding: 22px;
-
-  /* ---------- HEADER ---------- */
-  --logo-size: 34px;
-  --nav-font-size: 14px;
-  --nav-height: 42px;
-  --nav-gap: 14px;
-
-  /* ---------- PAGE TITLES ---------- */
-  --page-title-size: 68px;
-  --page-title-spacing: 12px;
-
-  /* ---------- BODY TYPE ---------- */
-  --intro-size: 23px;
-  --body-size: 17px;
-  --label-size: 18px;
-}
-
-
-/* =========================================================
-   PAGE CONTAINER
-   ========================================================= */
-
-.site-wrap {
-  width: 100%;
-  max-width: var(--page-max-width);
-  margin: 0 auto;
-  padding: 18px var(--page-side-padding) 60px;
-  box-sizing: border-box;
-}
-
-
-/* =========================================================
-   SHARED HEADER
-   ========================================================= */
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-
-  width: 100%;
-  box-sizing: border-box;
-
-  background: var(--bg);
-
-  padding: 0;
-  margin: 0;
-}
-
-
-/* LOGO */
-
-.site-header .logo-text {
-  font-family: 'Oswald', sans-serif;
-  font-size: var(--logo-size);
-  font-weight: 500;
-
-  line-height: 0.92;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-
-  margin: 0 0 6px 0;
-  padding: 0;
-}
-
-
-/* NAVIGATION */
-
-.site-header .nav-wrap {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-
-  gap: var(--nav-gap);
-
-  width: 100%;
-
-  margin: 10px 0 12px;
-  padding: 0;
-}
-
-
-/* NAV PILLS */
-
-.site-header .nav-pill {
-  box-sizing: border-box;
-
-  width: 100%;
-  min-height: var(--nav-height);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 6px 14px;
-
-  font-family: 'Inconsolata', monospace;
-  font-size: var(--nav-font-size);
-  line-height: 1.15;
-
-  text-align: center;
-  text-decoration: none;
-
-  border-radius: 999px;
-
-  background: var(--pill-light);
-  color: #333;
-}
-
-
-/* ACTIVE NAV PILL */
-
-.site-header .nav-pill.active {
-  background: var(--pill-dark);
-  color: #fff;
-}
-
-
-/* HEADER DIVIDER */
-
-.site-header .divider {
-  width: 100%;
-
-  border: 0;
-  border-top: 1px solid #cfcfd4;
-
-  margin: 10px 0 0;
-  padding: 0;
-}
-
-
-/* =========================================================
-   PAGE TITLES
-   ========================================================= */
-
-.hero-title,
-.material-section-title,
-.recert-section-title {
-  width: 100%;
-  max-width: none;
-
-  box-sizing: border-box;
-
-  font-family: 'Oswald', sans-serif;
-
-  font-size: var(--page-title-size) !important;
-  font-weight: 400;
-
-  line-height: 1.02 !important;
-
-  letter-spacing: var(--page-title-spacing);
-  text-transform: uppercase;
-
-  margin: 18px 0 12px !important;
-  padding: 0;
-}
-
-
-/* =========================================================
-   STANDARD TYPOGRAPHY
-   ========================================================= */
-
-.hero-body {
-  font-family: 'Hanken Grotesk', sans-serif;
-  font-size: var(--intro-size);
-  font-weight: 300;
-  line-height: 1.45;
-}
-
-.section-subtitle {
-  font-family: 'Inconsolata', monospace;
-  font-size: var(--label-size);
-}
-
-.section-body {
-  font-family: 'Hanken Grotesk', sans-serif;
-  font-size: var(--body-size);
-  font-weight: 300;
-  line-height: 1.55;
 }
