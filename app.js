@@ -229,14 +229,23 @@ const CLASS_COLORS = {
       anchor: "building-envelope-panel"
     },
 
-    10: {
-      name: "Window & Frame",
-      potential: "High",
-      text:
-        "Remove the complete assembly where possible. Intact windows and frames may be reused directly or separated for component recovery.",
-      anchor: "window-frame"
-    }
-  };
+10: {
+  name: "Window & Frame",
+  potential: "High",
+  text:
+    "Remove the complete assembly where possible. Intact windows and frames may be reused directly or separated for component recovery.",
+  anchor: "window-frame"
+},
+
+"dimensional-lumber": {
+  name: "Dimensional Lumber",
+  potential: "High",
+  text:
+    "Carefully deconstruct, denail and inspect framing lumber for damage. Sound pieces can be reused directly, while structural reuse may require regrading.",
+  anchor: "dimensional-lumber"
+}
+
+};
 
   // =========================================================
 // MATERIAL INFORMATION SHOWN AFTER ANALYSIS
