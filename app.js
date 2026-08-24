@@ -65,18 +65,18 @@ document.addEventListener("DOMContentLoaded", async function () {
   // MODEL CLASSES
   // =========================================================
 
-  const CLASS_COLORS = {
-    1: [220, 20, 60],
-    2: [160, 82, 45],
-    3: [169, 169, 169],
-    4: [176, 224, 230],
-    5: [139, 69, 19],
-    6: [70, 130, 180],
-    7: [128, 128, 128],
-    8: [255, 215, 0],
-    9: [34, 139, 34],
-    10: [135, 206, 235]
-  };
+const CLASS_COLORS = {
+  1: [230, 35, 70],      // Brick — crimson red
+  2: [255, 145, 25],     // Door & Frame — bright orange
+  3: [255, 205, 40],     // Fiber Cement — golden yellow
+  4: [40, 210, 200],     // Non-window Glass — turquoise
+  5: [150, 90, 220],     // Shingles — violet
+  6: [45, 105, 220],     // Siding — strong blue
+  7: [215, 90, 210],     // Stone — bright magenta
+  8: [120, 210, 70],     // Stucco — lime green
+  9: [20, 150, 75],      // Vegetation — green
+  10: [80, 190, 235]     // Window & Frame — sky blue
+};
 
 
   const CLASS_NAMES = {
