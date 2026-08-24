@@ -1342,3 +1342,175 @@ body {
 #detected-material-info .material-copy-body {
   max-width: 900px;
 }
+/* =========================================================
+   MOBILE FIXES
+   Keep this at the VERY END of style.css
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  /* -----------------------------------------
+     PREVENT HORIZONTAL PAGE OVERFLOW
+     ----------------------------------------- */
+
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  .site-wrap,
+  #analyzer,
+  .analyzer-grid,
+  .analyzer-left,
+  .analyzer-right,
+  #detected-material-info,
+  #detected-material-info-results {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+
+  /* -----------------------------------------
+     ANALYZER
+     ----------------------------------------- */
+
+  .analyzer-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .analyzer-left,
+  .analyzer-right {
+    min-width: 0;
+  }
+
+  .upload-box {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .image-preview {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  #segmentation-overlay {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+
+  /* Results beneath analyzer */
+
+  .analyzer-right {
+    margin-top: 42px;
+  }
+
+  .components-panel,
+  .recommendations-panel {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+
+  /* -----------------------------------------
+     DETECTED MATERIAL INFORMATION
+     ----------------------------------------- */
+
+  #detected-material-info {
+    grid-column: auto;
+    margin-top: 60px;
+  }
+
+  #detected-material-info .material-info-grid {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    gap: 18px;
+
+    padding: 28px 0;
+  }
+
+
+  /*
+     On desktop the structure is:
+     IMAGE | TITLE + INFORMATION
+
+     On mobile this lets us reorganize it as:
+
+     TITLE
+     IMAGE
+     INFORMATION
+  */
+
+  #detected-material-info .material-info-copy {
+    display: contents;
+  }
+
+  #detected-material-info .material-copy-title {
+    order: 1;
+
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0 0 6px;
+  }
+
+  #detected-material-info .material-info-media {
+    order: 2;
+
+    width: 100%;
+    max-width: 100%;
+
+    justify-content: flex-start;
+
+    margin-bottom: 10px;
+  }
+
+  #detected-material-info .material-copy-subtitle,
+  #detected-material-info .material-copy-body {
+    order: 3;
+
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+
+  /* Material diagrams */
+
+  #detected-material-info .material-duo-grid {
+    width: 100%;
+    max-width: 100%;
+
+    justify-items: start;
+  }
+
+  #detected-material-info .material-diagram-img {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+  }
+
+
+  /* Make material text use normal phone width */
+
+  #detected-material-info .material-copy-body {
+    line-height: 1.55;
+  }
+
+}
