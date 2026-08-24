@@ -1221,7 +1221,87 @@ function renderDetectedMaterialInfo(detectedMaterials) {
     }
   );
 
+// =========================================================
+// SAMPLE FACADE SELECTION
+// =========================================================
 
+sampleFacadeButtons.forEach(button => {
+
+  button.addEventListener(
+    "click",
+    async function () {
+
+      const samplePath =
+        button.dataset.sample;
+
+      if (!samplePath) {
+        return;
+      }
+
+
+      try {
+
+        const response =
+          await fetch(samplePath);
+
+        const blob =
+          await response.blob();
+
+
+        uploadedFile =
+          new File(
+            [blob],
+            samplePath.split("/").pop(),
+            {
+              type: blob.type || "image/jpeg"
+            }
+          );
+
+
+        const reader =
+          new FileReader();
+
+
+        reader.onload =
+          function (e) {
+
+            imagePreview.src =
+              e.target.result;
+
+            imagePreview.style.display =
+              "block";
+
+            uploadPlaceholder.style.display =
+              "none";
+
+            overlayCanvas.style.display =
+              "none";
+
+            analyzeButton.textContent =
+              "Analyze Facade";
+
+            resetResults();
+          };
+
+
+        reader.readAsDataURL(
+          uploadedFile
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "Could not load sample facade:",
+          error
+        );
+
+      }
+
+    }
+  );
+
+});
   // =========================================================
   // ANALYZE
   // =========================================================
