@@ -45,6 +45,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   const detectedMaterialInfoResults =
     document.getElementById("detected-material-info-results");
 
+  const sampleFacadeButtons =
+    document.querySelectorAll(".sample-facade-btn");
 
   // =========================================================
   // MODEL
