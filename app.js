@@ -690,84 +690,142 @@ const MATERIAL_DETAIL_INFO = {
   // CIRCULARITY RECOMMENDATIONS
   // =========================================================
 
-  function renderRecommendations(
-    detectedMaterials
-  ) {
+function renderRecommendations(
+  detectedMaterials
+) {
 
-    const materials =
-      detectedMaterials.filter(
-        item =>
-          RECOMMENDATION_INFO[
-            item.classId
-          ]
-      );
-
-
-    if (materials.length === 0) {
-
-      recommendationsResults.innerHTML = `
-        <p class="muted">
-          No reuse recommendations available
-          for the detected materials.
-        </p>
-      `;
-
-      return;
-    }
-
-
-    let html = `
-      <div class="recommendations-list">
-    `;
-
-
-    materials.forEach(item => {
-
-      const info =
+  const materials =
+    detectedMaterials.filter(
+      item =>
         RECOMMENDATION_INFO[
           item.classId
-        ];
+        ]
+    );
 
 
-      html += `
-        <div class="recommendation-card">
+  // Check whether detected facade materials
+  // suggest hidden dimensional lumber framing
 
-          <div class="recommendation-header">
+  const hasWoodFraming =
+    detectedMaterials.some(
+      item =>
+        WOOD_FRAMING_TRIGGERS.has(
+          item.classId
+        )
+    );
 
-            <span class="recommendation-name">
-              ${info.name}
-            </span>
 
-            <span class="recommendation-badge">
-              ${info.potential}
-            </span>
+  if (
+    materials.length === 0 &&
+    !hasWoodFraming
+  ) {
 
-          </div>
+    recommendationsResults.innerHTML = `
+      <p class="muted">
+        No reuse recommendations available
+        for the detected materials.
+      </p>
+    `;
 
-          <div class="recommendation-copy">
-            ${info.text}
-          </div>
+    return;
+  }
 
-          <a
-            href="#${info.anchor}"
-            class="recommendation-link"
-          >
-            View Material Information →
-          </a>
 
-        </div>
-      `;
-    });
+  let html = `
+    <div class="recommendations-list">
+  `;
+
+
+  // Recommendations for directly detected materials
+
+  materials.forEach(item => {
+
+    const info =
+      RECOMMENDATION_INFO[
+        item.classId
+      ];
 
 
     html += `
+      <div class="recommendation-card">
+
+        <div class="recommendation-header">
+
+          <span class="recommendation-name">
+            ${info.name}
+          </span>
+
+          <span class="recommendation-badge">
+            ${info.potential}
+          </span>
+
+        </div>
+
+        <div class="recommendation-copy">
+          ${info.text}
+        </div>
+
+        <a
+          href="#${info.anchor}"
+          class="recommendation-link"
+        >
+          View Material Information →
+        </a>
+
       </div>
     `;
+  });
 
 
-    recommendationsResults.innerHTML =
-      html;
+  // Recommendation for likely hidden dimensional lumber
+
+  if (hasWoodFraming) {
+
+    const info =
+      RECOMMENDATION_INFO[
+        "dimensional-lumber"
+      ];
+
+
+    html += `
+      <div class="recommendation-card">
+
+        <div class="recommendation-header">
+
+          <span class="recommendation-name">
+            ${info.name}
+          </span>
+
+          <span class="recommendation-badge">
+            ${info.potential}
+          </span>
+
+        </div>
+
+        <div class="recommendation-copy">
+          ${info.text}
+        </div>
+
+        <a
+          href="#${info.anchor}"
+          class="recommendation-link"
+        >
+          View Material Information →
+        </a>
+
+      </div>
+    `;
   }
+
+
+  html += `
+    </div>
+  `;
+
+
+  recommendationsResults.innerHTML =
+    html;
+}
 
   // =========================================================
 // DETECTED MATERIAL INFORMATION
