@@ -68,12 +68,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 const CLASS_COLORS = {
   1: [230, 35, 70],      // Brick — crimson red
   2: [255, 145, 25],     // Door & Frame — bright orange
-  3: [255, 205, 40],     // Fiber Cement — golden yellow
+  3: [255, 105, 95],     // Fiber Cement — coral
   4: [40, 210, 200],     // Non-window Glass — turquoise
   5: [150, 90, 220],     // Shingles — violet
   6: [45, 105, 220],     // Siding — strong blue
   7: [215, 90, 210],     // Stone — bright magenta
-  8: [120, 210, 70],     // Stucco — lime green
+  8: [255, 215, 0],      // Stucco — yellow
   9: [20, 150, 75],      // Vegetation — green
   10: [80, 190, 235]     // Window & Frame — sky blue
 };
